@@ -1,0 +1,51 @@
+.contact {
+  scroll-margin-top: 0;
+  padding: clamp(4rem, 10vw, 8rem) clamp(1.5rem, 6vw, 5rem);
+  border-top: 1px solid var(--line);
+  display: grid;
+  gap: 2.4rem;
+}
+
+.contact h2 {
+  margin: 0;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(2.4rem, 6vw, 5rem);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+}
+
+.details {
+  display: grid;
+  gap: 1.4rem;
+  max-width: 42rem;
+}
+
+.details a {
+  border-bottom: 1px solid transparent;
+}
+
+.details a:hover,
+.details a:focus-visible {
+  border-bottom-color: currentColor;
+  outline: none;
+}
+
+.details dt {
+  margin: 0 0 0.25rem;
+  font-size: 0.68rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.details dd {
+  margin: 0;
+  font-family: "Raleway", serif;
+  font-size: 1.6rem;
+}
+
+.note {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+}

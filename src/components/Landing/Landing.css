@@ -1,0 +1,80 @@
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.hero-image {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.hero-veil {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 236, 216, 0.28) 0%,
+    rgba(255, 236, 216, 0.076) 40%,
+    rgba(255, 236, 216, 0.131) 60%
+  );
+}
+
+.name {
+  position: relative;
+  z-index: 1;
+  width: min(90vw, 54rem);
+  padding: 0.4rem;
+}
+
+.name:focus-visible {
+  outline: 1px solid #f4f0ea;
+  outline-offset: 8px;
+}
+
+.name-logo {
+  width: 100%;
+  height: auto;
+  mix-blend-mode: screen;
+}
+
+.hint {
+  position: absolute;
+  bottom: 1.6rem;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.hint-arrow {
+  display: block;
+  width: 1.35rem;
+  height: 1.35rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.25;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
