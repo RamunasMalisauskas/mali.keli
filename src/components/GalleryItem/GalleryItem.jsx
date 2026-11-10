@@ -3,6 +3,7 @@ import "./GalleryItem.css";
 
 export default function GalleryItem({ work }) {
   const [open, setOpen] = useState(false);
+  const [copyDown, setCopyDown] = useState(false);
   const itemRef = useRef(null);
   const extraRef = useRef(null);
   const {
@@ -18,17 +19,34 @@ export default function GalleryItem({ work }) {
   } = work;
 
   useEffect(() => {
-    if (!open) return;
+    if (!open) {
+      setCopyDown(false);
+      return;
+    }
+
     const extra = extraRef.current;
     const item = itemRef.current;
     if (!extra || !item) return;
 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let copyTimer;
+    let scrolled = false;
+    let settled = false;
+
+    const slideCopy = () => {
+      if (settled) return;
+      settled = true;
+      setCopyDown(true);
+    };
+
     const scrollToEnd = () => {
+      if (scrolled) return;
+      scrolled = true;
       item.scrollIntoView({
         behavior: reduced ? "auto" : "smooth",
         block: "end",
       });
+      copyTimer = window.setTimeout(slideCopy, reduced ? 0 : 520);
     };
 
     const onEnd = (event) => {
@@ -42,11 +60,21 @@ export default function GalleryItem({ work }) {
     return () => {
       extra.removeEventListener("transitionend", onEnd);
       window.clearTimeout(fallback);
+      window.clearTimeout(copyTimer);
     };
   }, [open]);
 
   return (
-    <article ref={itemRef} className={open ? "work is-open" : "work"}>
+    <article
+      ref={itemRef}
+      className={[
+        "work",
+        open ? "is-open" : "",
+        copyDown ? "is-copy-down" : "",
+      ]
+        .filter(Boolean)
+        .join(" ")}
+    >
       <button
         className="work-media"
         type="button"
@@ -63,13 +91,15 @@ export default function GalleryItem({ work }) {
         </span>
       </button>
       <div className="work-copy">
-        <div className="work-text">
-          <p className="index">{index}</p>
-          <h2>{title}</h2>
-          <p>{description}</p>
+        <div className="work-copy-inner">
+          <div className="work-text">
+            <p className="index">{index}</p>
+            <h2>{title}</h2>
+            <p>{description}</p>
+          </div>
+          <span className="work-dot" aria-hidden="true" />
+          <p className="work-date">{year}</p>
         </div>
-        <span className="work-dot" aria-hidden="true" />
-        <p className="work-date">{year}</p>
       </div>
       <div
         className="work-extra"

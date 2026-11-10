@@ -85,5 +85,6 @@
 
   .contact .contact-dot {
     left: 50%;
+    bottom: var(--spine-inset);
   }
 }
