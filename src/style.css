@@ -3,6 +3,7 @@
   --ink: #4a3f33;
   --muted: #91877a;
   --line: rgba(236, 230, 220, 0.18);
+  --media-radius: clamp(1.15rem, 2.2vw, 2rem);
 }
 
 *,
