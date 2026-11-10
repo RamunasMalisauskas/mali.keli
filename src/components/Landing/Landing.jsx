@@ -30,15 +30,7 @@ export default function Landing() {
           rooms, and the time it takes for a piece to settle.
         </p>
         <a className="hint" href="#works">
-          <span className="sr-only">Scroll to works</span>
-          <svg
-            className="hint-arrow"
-            viewBox="0 0 24 24"
-            aria-hidden="true"
-            focusable="false"
-          >
-            <path d="M5 9.5 12 16.5 19 9.5" />
-          </svg>
+          <span className="work-dot" aria-hidden="true" />
         </a>
       </div>
     </header>

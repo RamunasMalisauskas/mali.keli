@@ -5,6 +5,8 @@
   --dark: #211c16;
   --line: rgba(236, 230, 220, 0.18);
   --media-radius: clamp(1.15rem, 2.2vw, 2rem);
+  --spine-inset: 2.55rem;
+  --dot-size: 30px;
 }
 
 *,
@@ -54,8 +56,49 @@ button {
   border: 0;
 }
 
+.work-dot {
+  --dot-pulse: color-mix(in srgb, var(--ink) 42%, transparent);
+  position: relative;
+  display: block;
+  width: var(--dot-size);
+  height: var(--dot-size);
+  border-radius: 50%;
+  background: var(--ink);
+  border: 10px solid var(--bg);
+  z-index: 1;
+}
+
+.work-dot::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  translate: -50% -50%;
+  border-radius: 50%;
+  pointer-events: none;
+  box-shadow: 0 0 0 0 var(--dot-pulse);
+  animation: work-dot-pulse 3.2s ease-out infinite;
+}
+
+@keyframes work-dot-pulse {
+  0% {
+    box-shadow: 0 0 0 0 var(--dot-pulse);
+  }
+
+  70%,
+  100% {
+    box-shadow: 0 0 0 11px transparent;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+
+  .work-dot::after {
+    animation: none;
   }
 }

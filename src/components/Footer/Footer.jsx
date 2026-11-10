@@ -31,6 +31,7 @@ export default function Footer() {
           <dd>{inquiries}</dd>
         </div>
       </dl>
+      <span className="contact-dot work-dot" aria-hidden="true" />
     </footer>
   );
 }

@@ -9,8 +9,8 @@
 
 .spine {
   position: absolute;
-  top: calc(100svh - 2.55rem);
-  bottom: 0;
+  top: calc(100svh - var(--spine-inset));
+  bottom: var(--spine-inset);
   left: var(--spine-x);
   width: var(--spine-width);
   transform: translateX(-50%);

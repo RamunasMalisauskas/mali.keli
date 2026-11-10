@@ -3,23 +3,35 @@
   position: relative;
   z-index: 1;
   scroll-margin-top: 0;
+  min-height: 100svh;
   padding: clamp(4rem, 10vw, 8rem) clamp(1.5rem, 6vw, 5rem);
   background: var(--dark);
   color: var(--bg);
   display: grid;
   gap: 2.4rem;
+  align-content: start;
 }
 
 .contact::before {
   content: "";
   position: absolute;
   top: 0;
-  bottom: 0;
+  bottom: 50vh;
   left: var(--spine-x, 83.333%);
   width: var(--spine-width, 2px);
   transform: translateX(-50%);
   background: color-mix(in srgb, var(--bg) 18%, transparent);
   pointer-events: none;
+}
+
+.contact .contact-dot {
+  --dot-pulse: color-mix(in srgb, var(--bg) 42%, transparent);
+  position: absolute;
+  left: var(--spine-x, 83.333%);
+  bottom: 50vh;
+  transform: translateX(-50%);
+  border-color: var(--dark);
+  background: var(--bg);
 }
 
 .contact h2 {
@@ -69,5 +81,9 @@
 @media (max-width: 800px) {
   .contact::before {
     display: none;
+  }
+
+  .contact .contact-dot {
+    left: 50%;
   }
 }
