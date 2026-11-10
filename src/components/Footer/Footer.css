@@ -4,7 +4,7 @@
   z-index: 1;
   scroll-margin-top: 0;
   padding: clamp(4rem, 10vw, 8rem) clamp(1.5rem, 6vw, 5rem);
-  background: var(--ink);
+  background: var(--dark);
   color: var(--bg);
   display: grid;
   gap: 2.4rem;
