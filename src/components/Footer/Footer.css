@@ -68,14 +68,8 @@
 
 .details dd {
   margin: 0;
-  font-family: "Raleway", serif;
+  font-family: "Raleway", sans-serif;
   font-size: 1.6rem;
-}
-
-.note {
-  margin: 0;
-  color: var(--footer-muted);
-  font-size: 0.95rem;
 }
 
 @media (max-width: 800px) {

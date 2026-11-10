@@ -78,7 +78,7 @@
 .work-copy-inner {
   grid-row: 2;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 30px minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) var(--dot-size) minmax(0, 1fr);
   align-items: center;
 }
 

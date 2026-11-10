@@ -1,6 +1,5 @@
+import { assetSrc } from "../../lib/safe.js";
 import "./Landing.css";
-
-const LOGO_SRC = "/images/logo.png";
 
 export default function Landing() {
   return (
@@ -8,8 +7,8 @@ export default function Landing() {
       <div className="hero-media">
         <video
           className="hero-video"
-          src="/video/malikeli_hero_small.mp4"
-          poster="/images/hero.jpg"
+          src={assetSrc("/video/malikeli_hero_small.mp4")}
+          poster={assetSrc("/images/hero.jpg")}
           autoPlay
           muted
           loop
@@ -20,7 +19,7 @@ export default function Landing() {
       <div className="hero-side">
         <img
           className="name-logo"
-          src={LOGO_SRC}
+          src={assetSrc("/images/logo.png")}
           alt="MALI.KELI"
           width="1400"
           height="280"
@@ -29,7 +28,7 @@ export default function Landing() {
           Painting, installation, and works on paper. Slow surfaces, quiet
           rooms, and the time it takes for a piece to settle.
         </p>
-        <a className="hint" href="#works">
+        <a className="hint" href="#works" aria-label="Scroll to works">
           <span className="work-dot" aria-hidden="true" />
         </a>
       </div>

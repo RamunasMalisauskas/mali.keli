@@ -1,8 +1,10 @@
-import "./Footer.css";
+import { httpsHref, mailtoHref } from "../../lib/safe.js";
 import { footer } from "../../data/footer.js";
+import "./Footer.css";
 
 export default function Footer() {
-  const { studio, email, instagram, inquiries } = footer;
+  const mail = mailtoHref(footer.email);
+  const instagram = httpsHref(footer.instagram.url);
 
   return (
     <footer className="contact" id="contact">
@@ -10,25 +12,27 @@ export default function Footer() {
       <dl className="details">
         <div>
           <dt>Studio</dt>
-          <dd>{studio}</dd>
+          <dd>{footer.studio}</dd>
         </div>
         <div>
           <dt>Email</dt>
-          <dd>
-            <a href={`mailto:${email}`}>{email}</a>
-          </dd>
+          <dd>{mail ? <a href={mail}>{footer.email}</a> : footer.email}</dd>
         </div>
         <div>
           <dt>Instagram</dt>
           <dd>
-            <a href={instagram.url} rel="noreferrer">
-              {instagram.handle}
-            </a>
+            {instagram ? (
+              <a href={instagram} rel="noopener noreferrer" target="_blank">
+                {footer.instagram.handle}
+              </a>
+            ) : (
+              footer.instagram.handle
+            )}
           </dd>
         </div>
         <div>
           <dt>Inquiries</dt>
-          <dd>{inquiries}</dd>
+          <dd>{footer.inquiries}</dd>
         </div>
       </dl>
       <span className="contact-dot work-dot" aria-hidden="true" />
