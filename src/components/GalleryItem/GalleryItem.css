@@ -6,6 +6,7 @@
 }
 
 .work-media {
+  position: relative;
   display: block;
   width: min(100%, 42rem);
   margin: 0 clamp(1.2rem, 4vw, 4rem);
@@ -13,12 +14,8 @@
   border: 0;
   background: #161412;
   overflow: hidden;
-  cursor: zoom-in;
+  cursor: pointer;
   aspect-ratio: 4 / 3;
-}
-
-.work.is-open .work-media {
-  cursor: zoom-out;
 }
 
 .work-media:focus-visible {
@@ -38,11 +35,36 @@
   transform: scale(1.08);
 }
 
+.work-pill {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) translateY(6px);
+  padding: 0.5rem 0.95rem;
+  border-radius: 999px;
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 0.68rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease;
+}
+
+.work-media:hover .work-pill,
+.work-media:focus-visible .work-pill {
+  opacity: 1;
+  transform: translate(-50%, -50%);
+}
+
 .work-copy {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 1.5rem minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) 30px minmax(0, 1fr);
   align-items: center;
-  column-gap: 0.35rem;
 }
 
 .work-text {
@@ -76,12 +98,14 @@
 }
 
 .work-dot {
-  width: 9px;
-  height: 9px;
+  position: relative;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   background: var(--ink);
+  border: 10px solid var(--bg);
   justify-self: center;
-  z-index: 2;
+  z-index: 1;
 }
 
 .work-date {
@@ -96,8 +120,30 @@
 .work-extra {
   grid-column: 1 / -1;
   display: grid;
+  grid-template-rows: 0fr;
+  min-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition:
+    grid-template-rows 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.35s ease;
+}
+
+.work.is-open .work-extra {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+.work-extra-inner {
+  overflow: hidden;
+  min-height: 0;
+  display: grid;
   gap: 1.6rem;
-  padding: 1.6rem clamp(1.2rem, 4vw, 4rem) 0;
+  padding: 0 clamp(1.2rem, 4vw, 4rem);
+}
+
+.work.is-open .work-extra-inner {
+  padding-top: 1.6rem;
 }
 
 .work-meta {
@@ -121,22 +167,27 @@
 }
 
 .work-gallery {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  display: flex;
   gap: 0.8rem;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 0.6rem;
+  -webkit-overflow-scrolling: touch;
 }
 
 .work-gallery img {
-  width: 100%;
+  flex: 0 0 min(72vw, 34rem);
+  width: min(72vw, 34rem);
   height: 42vh;
   object-fit: cover;
+  scroll-snap-align: start;
 }
 
 @media (max-width: 800px) {
   .work,
   .work-copy,
-  .work-meta,
-  .work-gallery {
+  .work-meta {
     grid-template-columns: 1fr;
   }
 
@@ -161,7 +212,9 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .work-media img {
+  .work-media img,
+  .work-pill,
+  .work-extra {
     transition: none;
   }
 

@@ -19,6 +19,14 @@ export const works = [
         src: "/images/hero.jpg",
         alt: "Studio view with large canvases",
       },
+      {
+        src: "/images/work-02.jpg",
+        alt: "Studio view with large canvases",
+      },
+      {
+        src: "/images/work-03.jpg",
+        alt: "Studio view with large canvases",
+      },
     ],
   },
   {
