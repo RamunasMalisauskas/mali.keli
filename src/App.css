@@ -1,0 +1,26 @@
+.page {
+  --side: 33.333%;
+  --spine-x: calc(100% - var(--side) / 2);
+  position: relative;
+}
+
+.stream {
+  position: relative;
+}
+
+.spine {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--spine-x);
+  width: 1px;
+  background: color-mix(in srgb, var(--ink) 38%, transparent);
+  pointer-events: none;
+  z-index: 1;
+}
+
+@media (max-width: 800px) {
+  .spine {
+    display: none;
+  }
+}

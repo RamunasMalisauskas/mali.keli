@@ -1,16 +1,20 @@
 import { Landing, GalleryItem, Footer } from "./components";
 import { works } from "./data/works.js";
+import "./App.css";
 
 export default function App() {
   return (
-    <>
+    <div className="page">
       <Landing />
-      <main>
-        {works.map((work, i) => (
-          <GalleryItem key={work.id} {...work} reverse={i % 2 === 1} />
-        ))}
-      </main>
+      <div className="stream">
+        <div className="spine" aria-hidden="true" />
+        <main id="works">
+          {works.map((work) => (
+            <GalleryItem key={work.id} work={work} />
+          ))}
+        </main>
+      </div>
       <Footer />
-    </>
+    </div>
   );
 }
