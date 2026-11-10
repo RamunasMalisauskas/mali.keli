@@ -1,37 +1,36 @@
 import "./Footer.css";
+import { footer } from "../../data/footer.js";
 
 export default function Footer() {
+  const { studio, email, instagram, inquiries } = footer;
+
   return (
     <footer className="contact" id="contact">
       <h2>Contact</h2>
       <dl className="details">
         <div>
           <dt>Studio</dt>
-          <dd>Mali Keli</dd>
+          <dd>{studio}</dd>
         </div>
         <div>
           <dt>Email</dt>
           <dd>
-            <a href="mailto:hello@mali.keli">hello@mali.keli</a>
+            <a href={`mailto:${email}`}>{email}</a>
           </dd>
         </div>
         <div>
           <dt>Instagram</dt>
           <dd>
-            <a href="https://instagram.com/mali.keli" rel="noreferrer">
-              @mali.keli
+            <a href={instagram.url} rel="noreferrer">
+              {instagram.handle}
             </a>
           </dd>
         </div>
         <div>
           <dt>Inquiries</dt>
-          <dd>Commissions, exhibitions, and studio visits.</dd>
+          <dd>{inquiries}</dd>
         </div>
       </dl>
-      <p className="note">
-        Replace the email and social with your live details whenever you are
-        ready.
-      </p>
     </footer>
   );
 }
