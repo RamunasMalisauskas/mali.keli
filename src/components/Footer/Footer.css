@@ -5,7 +5,16 @@
   scroll-margin-top: 0;
   min-height: 100svh;
   padding: clamp(4rem, 10vw, 8rem) clamp(1.5rem, 6vw, 5rem);
-  background: var(--dark);
+  background-color: var(--dark);
+  background-image:
+    linear-gradient(
+      color-mix(in srgb, var(--dark) 62%, transparent),
+      color-mix(in srgb, var(--dark) 62%, transparent)
+    ),
+    url("/images/cynopaper.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   color: var(--bg);
   display: grid;
   gap: 2.4rem;

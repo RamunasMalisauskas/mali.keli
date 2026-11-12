@@ -1,8 +1,8 @@
 :root {
-  --bg: #eee5d9;
-  --ink: #4a3f33;
-  --muted: #91877a;
-  --dark: #211c16;
+  --bg: #f5fafe;
+  --ink: #1848a0;
+  --muted: #1b3a73;
+  --dark: #081f3e;
   --media-radius: clamp(1.15rem, 2.2vw, 2rem);
   --spine-inset: 2.55rem;
   --dot-size: 30px;
@@ -31,6 +31,14 @@ body {
 img {
   max-width: 100%;
   display: block;
+}
+
+h1 {
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 500;
+  font-size: 2.2rem;
+  line-height: 1.2;
+  margin: 0;
 }
 
 a {

@@ -3,13 +3,15 @@
   --spine-x: calc(100% - var(--side) / 2);
   --spine-width: 2px;
   --spine-color: color-mix(in srgb, var(--ink) 18%, transparent);
+  --hero-copy-pad: 2em;
+  --hero-name-size: clamp(1.45rem, 2.2vw, 2.1rem);
   position: relative;
   min-height: 100svh;
 }
 
 .spine {
   position: absolute;
-  top: calc(100svh - var(--spine-inset));
+  top: calc(100svh + var(--hero-copy-pad) + var(--dot-size) / 2);
   bottom: var(--spine-inset);
   left: var(--spine-x);
   width: var(--spine-width);
