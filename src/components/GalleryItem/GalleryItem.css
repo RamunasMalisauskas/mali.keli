@@ -9,14 +9,13 @@
   position: relative;
   display: block;
   width: min(100%, 42rem);
-  margin: 0 clamp(1.2rem, 4vw, 4rem);
   padding: 0;
   border: 0;
   background: #161412;
   overflow: hidden;
   cursor: pointer;
   aspect-ratio: 4 / 3;
-  border-radius: var(--media-radius);
+  border-radius: 0 var(--media-radius) var(--media-radius) 0;
   corner-shape: squircle;
 }
 
