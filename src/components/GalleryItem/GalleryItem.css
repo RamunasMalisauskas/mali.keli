@@ -2,7 +2,7 @@
   display: grid;
   grid-template-columns: 2fr 1fr;
   align-items: stretch;
-  padding: clamp(1.5rem, 5vw, 4rem) 0;
+  padding: clamp(2.6rem, 5vw, 4rem) 0;
 }
 
 .work-media {
