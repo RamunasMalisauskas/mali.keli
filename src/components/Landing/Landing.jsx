@@ -2,9 +2,9 @@ import { useEffect } from "react";
 import { assetSrc, prefersReducedMotion } from "../../lib/safe.js";
 import "./Landing.css";
 
-const INTRO_DELAY_MS = 4000;
-const INTRO_DISTANCE = 90;
-const INTRO_DURATION_MS = 3200;
+const INTRO_DELAY_MS = 400;
+const INTRO_DISTANCE = 140;
+const INTRO_DURATION_MS = 2400;
 
 function easeInOut(t) {
   return t < 0.5 ? 2 * t * t : 1 - (2 * (1 - t)) ** 2 / 2;
@@ -72,15 +72,14 @@ export default function Landing() {
         />
       </div>
       <div className="hero-copy">
-        <p className="hero-text">
-          Painting, installation, and works on paper. Slow surfaces, quiet
-          rooms, and the time it takes for a piece to settle.
-        </p>
-        <h1>
-          <span className="hero-given">Ieva Keliauskaitė</span>
-          <span className="work-dot" aria-hidden="true" />
-          <span className="hero-family">Mališauskė</span>
-        </h1>
+        <div className="hero-copy-text">
+          <h1>Ieva Keliauskaitė - Mališauskė</h1>
+          <p className="hero-text">
+            Painting, installation, and works on paper. Slow surfaces, quiet
+            rooms, and the time it takes for a piece to settle.
+          </p>
+        </div>
+        <span className="work-dot" aria-hidden="true" />
       </div>
     </header>
   );
