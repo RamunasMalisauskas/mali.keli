@@ -8,7 +8,7 @@ export default function Landing() {
         <video
           className="hero-video"
           src={assetSrc("/video/malikeli_hero_small.mp4")}
-          poster={assetSrc("/images/hero.jpg")}
+          poster={assetSrc("/images/clo_01.jpg")}
           autoPlay
           muted
           loop

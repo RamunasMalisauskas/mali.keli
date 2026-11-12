@@ -1,0 +1,93 @@
+.upload-page {
+  min-height: 100svh;
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: 2.4rem 1.4rem 4rem;
+  display: grid;
+  gap: 2.4rem;
+}
+
+.upload-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.upload-page h1,
+.upload-page h2,
+.upload-page h3 {
+  margin: 0;
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 500;
+}
+
+.upload-form,
+.upload-editor {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.upload-form label,
+.upload-editor label {
+  display: grid;
+  gap: 0.3rem;
+  font-size: 0.68rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.upload-page input,
+.upload-page textarea {
+  width: 100%;
+  padding: 0.7rem 0.8rem;
+  border: 1px solid color-mix(in srgb, var(--ink) 18%, transparent);
+  background: color-mix(in srgb, var(--bg) 70%, white);
+  color: var(--ink);
+  font: inherit;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.upload-page button {
+  justify-self: start;
+  padding: 0.55rem 0.9rem;
+  border: 1px solid var(--ink);
+  background: transparent;
+  cursor: pointer;
+}
+
+.upload-work-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.6rem;
+}
+
+.upload-work-list li {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.8rem;
+  align-items: center;
+}
+
+.upload-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.upload-extra {
+  display: grid;
+  gap: 0.7rem;
+  margin: 0;
+  padding: 0.9rem 0 0;
+  border: 0;
+  border-top: 1px solid color-mix(in srgb, var(--ink) 12%, transparent);
+}
+
+.upload-status {
+  margin: 0;
+  color: var(--muted);
+}

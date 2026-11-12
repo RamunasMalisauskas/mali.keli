@@ -193,9 +193,10 @@
 }
 
 .work-gallery img {
-  flex: 0 0 min(72vw, 34rem);
-  width: min(72vw, 34rem);
-  height: 42vh;
+  flex: 0 0 min(48vw, 22rem);
+  width: min(48vw, 22rem);
+  aspect-ratio: 3 / 4;
+  height: auto;
   object-fit: cover;
   scroll-snap-align: start;
   border-radius: var(--media-radius);

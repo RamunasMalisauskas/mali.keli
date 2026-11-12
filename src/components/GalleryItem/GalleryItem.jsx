@@ -73,8 +73,8 @@ export default function GalleryItem({ work }) {
         <img
           src={assetSrc(work.image)}
           alt={work.alt}
-          width="1400"
-          height="1050"
+          width="800"
+          height="800"
           loading="lazy"
         />
         <span className="work-pill" aria-hidden="true">
