@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { footer } from "../../data/footer.js";
-import { works } from "../../data/works.js";
 import { getSession, login, logout } from "../../lib/uploadApi.js";
 import FooterForm from "./FooterForm.jsx";
 import WorksForm from "./WorksForm.jsx";
@@ -86,7 +85,7 @@ export default function Upload() {
         </button>
       </header>
       <FooterForm footer={footer} />
-      <WorksForm works={works} />
+      <WorksForm />
     </main>
   );
 }

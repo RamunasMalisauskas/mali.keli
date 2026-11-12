@@ -7,7 +7,7 @@ const securityHeaders = {
   "Referrer-Policy": "strict-origin-when-cross-origin",
   "X-Frame-Options": "DENY",
   "Content-Security-Policy":
-    "default-src 'self'; img-src 'self' data:; media-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'",
+    "default-src 'self'; img-src 'self' data:; media-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'self'; connect-src 'self' https://script.google.com https://script.googleusercontent.com; object-src 'none'; base-uri 'self'; form-action 'self'",
 };
 
 function withUpload(server, password) {

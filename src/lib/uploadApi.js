@@ -36,13 +36,6 @@ export function saveFooter(footer) {
   });
 }
 
-export function saveWorks(works) {
-  return request("/api/works", {
-    method: "PUT",
-    body: JSON.stringify({ works }),
-  });
-}
-
 export function uploadImage(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();

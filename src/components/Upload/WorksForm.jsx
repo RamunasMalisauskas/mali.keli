@@ -1,5 +1,10 @@
-import { useState } from "react";
-import { saveWorks, uploadImage } from "../../lib/uploadApi.js";
+import { useEffect, useState } from "react";
+import { uploadImage } from "../../lib/uploadApi.js";
+import {
+  deleteWorkOnSheet,
+  fetchWorks,
+  saveWorksToSheet,
+} from "../../lib/sheet.js";
 
 function emptyWork() {
   return {
@@ -24,10 +29,16 @@ function slugFromTitle(title) {
     .replace(/^-|-$/g, "");
 }
 
-export default function WorksForm({ works }) {
-  const [list, setList] = useState(works);
+export default function WorksForm() {
+  const [list, setList] = useState([]);
   const [editing, setEditing] = useState(null);
   const [status, setStatus] = useState("");
+
+  useEffect(() => {
+    fetchWorks()
+      .then(setList)
+      .catch((error) => setStatus(error.message));
+  }, []);
 
   function startNew() {
     setEditing(emptyWork());
@@ -62,10 +73,9 @@ export default function WorksForm({ works }) {
   }
 
   async function persist(next) {
-    setStatus("Saving…");
-    await saveWorks(next);
-    setList(next);
-    setStatus("Works saved.");
+    setStatus("Saving to Google Sheet…");
+    setList(await saveWorksToSheet(next));
+    setStatus("Sheet updated.");
   }
 
   async function onSubmit(event) {
@@ -98,10 +108,13 @@ export default function WorksForm({ works }) {
   }
 
   async function removeWork(id) {
-    if (!window.confirm("Remove this work from the site?")) return;
+    if (!window.confirm("Remove this work from the sheet?")) return;
+    setStatus("Saving to Google Sheet…");
     try {
-      await persist(list.filter((work) => work.id !== id));
+      const next = await deleteWorkOnSheet(id);
+      setList(next);
       if (editing?.id === id) setEditing(null);
+      setStatus("Sheet updated.");
     } catch (error) {
       setStatus(error.message);
     }
@@ -122,7 +135,9 @@ export default function WorksForm({ works }) {
                 onClick={() =>
                   setEditing({
                     ...work,
-                    extraImages: work.extraImages.map((item) => ({ ...item })),
+                    extraImages: (work.extraImages ?? []).map((item) => ({
+                      ...item,
+                    })),
                   })
                 }
               >
