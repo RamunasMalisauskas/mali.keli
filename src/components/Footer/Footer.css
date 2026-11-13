@@ -6,7 +6,7 @@
   min-height: 100svh;
   padding: clamp(4rem, 10vw, 8rem) clamp(1.5rem, 6vw, 5rem);
   background-color: var(--dark);
-  background-image: url("/images/cynopaper.png");
+  /* background-image: url("/images/cynopaper.png"); */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

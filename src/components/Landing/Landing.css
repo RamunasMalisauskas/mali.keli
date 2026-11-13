@@ -33,12 +33,13 @@
 
 .hero-copy h1 {
   font-family: "Raleway", serif;
+  font-weight: 800;
   display: flex;
   align-items: center;
   min-height: var(--dot-size);
   margin: 0;
   white-space: nowrap;
-  font-size: var(--hero-name-size, 2.1rem);
+  font-size: 4rem;
 }
 
 .hero-copy .work-dot {

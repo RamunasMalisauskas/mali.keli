@@ -11,7 +11,6 @@ export default function Footer() {
       <h2>Contact</h2>
       <dl className="details">
         <div>
-          <dt>Studio</dt>
           <dd>{footer.studio}</dd>
         </div>
         <div>
@@ -31,8 +30,8 @@ export default function Footer() {
           </dd>
         </div>
         <div>
-          <dt>Inquiries</dt>
-          <dd>{footer.inquiries}</dd>
+          {/* <dt>Inquiries</dt>
+          <dd>{footer.inquiries}</dd> */}
         </div>
       </dl>
       <span className="contact-dot work-dot" aria-hidden="true" />

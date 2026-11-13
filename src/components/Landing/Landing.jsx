@@ -75,9 +75,10 @@ export default function Landing() {
         <div className="hero-copy-text">
           <h1>Ieva Keliauskaitė - Mališauskė</h1>
           <p className="hero-text">
-            Painting, installation, and works on paper. Slow surfaces, quiet
-            rooms, and the time it takes for a piece to settle.
+            Textile Artist & Designer 〰️ Cyanotype & Embroidery Educator 〰️
+            Facilitating Creative & Social Projects
           </p>
+          <p className="hero-text">Page is under maintenance.</p>
         </div>
         <span className="work-dot" aria-hidden="true" />
       </div>

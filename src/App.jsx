@@ -6,10 +6,14 @@ import { works as fallbackWorks } from "./data/works.js";
 import { fetchWorks } from "./lib/sheet.js";
 import "./App.css";
 
+const SHOW_GALLERY = false;
+
 function Home() {
-  const [works, setWorks] = useState(fallbackWorks);
+  const [works, setWorks] = useState(SHOW_GALLERY ? fallbackWorks : []);
 
   useEffect(() => {
+    if (!SHOW_GALLERY) return undefined;
+
     let ignore = false;
     fetchWorks()
       .then((next) => {
@@ -25,11 +29,13 @@ function Home() {
     <div className="page">
       <div className="spine" aria-hidden="true" />
       <Landing />
-      <main id="works">
-        {works.map((work) => (
-          <GalleryItem key={work.id} work={work} />
-        ))}
-      </main>
+      {SHOW_GALLERY ? (
+        <main id="works">
+          {works.map((work) => (
+            <GalleryItem key={work.id} work={work} />
+          ))}
+        </main>
+      ) : null}
       <Footer />
     </div>
   );
