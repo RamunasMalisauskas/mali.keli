@@ -175,8 +175,9 @@
 
 .hero-bottom {
   display: grid;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: 2.3fr 0.7fr;
   align-items: end;
+  padding: 0 0 2.5rem 0;
 }
 
 .hero-media-land {
