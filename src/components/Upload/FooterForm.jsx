@@ -5,16 +5,17 @@ export default function FooterForm({ footer }) {
   const [form, setForm] = useState({
     ...footer,
     instagram: { ...footer.instagram },
+    facebook: { ...footer.facebook },
   });
   const [status, setStatus] = useState("");
 
   function update(event) {
     const { name, value } = event.target;
-    if (name.startsWith("instagram.")) {
-      const key = name.split(".")[1];
+    if (name.startsWith("instagram.") || name.startsWith("facebook.")) {
+      const [group, key] = name.split(".");
       setForm((current) => ({
         ...current,
-        instagram: { ...current.instagram, [key]: value },
+        [group]: { ...current[group], [key]: value },
       }));
       return;
     }
@@ -38,6 +39,10 @@ export default function FooterForm({ footer }) {
       <label>
         Studio
         <input name="studio" value={form.studio} onChange={update} required maxLength={80} />
+      </label>
+      <label>
+        Tagline
+        <input name="tagline" value={form.tagline} onChange={update} required maxLength={120} />
       </label>
       <label>
         Email
@@ -72,14 +77,13 @@ export default function FooterForm({ footer }) {
         />
       </label>
       <label>
-        Inquiries
-        <textarea
-          name="inquiries"
-          value={form.inquiries}
+        Facebook URL
+        <input
+          name="facebook.url"
+          type="url"
+          value={form.facebook.url}
           onChange={update}
-          required
-          maxLength={240}
-          rows={3}
+          maxLength={200}
         />
       </label>
       <button type="submit">Save footer</button>

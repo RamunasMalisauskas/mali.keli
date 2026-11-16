@@ -99,6 +99,21 @@
   color: var(--bg);
 }
 
+.contact-mark .work-dot {
+  --dot-pulse: color-mix(in srgb, var(--bg) 42%, transparent);
+  background: var(--bg);
+  border-color: var(--dark);
+}
+
+@media (max-width: 1100px) {
+  .contact-mark {
+    left: auto;
+    right: calc(100% - var(--spine-x, 87.5%) - var(--dot-size) / 2);
+    transform: translateY(-50%);
+    flex-direction: row-reverse;
+  }
+}
+
 @media (max-width: 800px) {
   .contact {
     min-height: 0;

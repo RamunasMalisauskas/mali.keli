@@ -13,11 +13,7 @@ export default function Footer() {
         <p className="contact-name">{footer.studio}</p>
         <p className="contact-tagline">{footer.tagline}</p>
         <nav className="contact-links" aria-label="Contact">
-          {mail ? (
-            <a href={mail}>〰️ email</a>
-          ) : (
-            <span>〰️ email</span>
-          )}
+          {mail ? <a href={mail}>〰️ email</a> : <span>〰️ email</span>}
           {instagram ? (
             <a href={instagram} rel="noopener noreferrer" target="_blank">
               〰️ instagram
