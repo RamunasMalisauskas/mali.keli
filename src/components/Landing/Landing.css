@@ -147,12 +147,20 @@
 
 .hero-description {
   margin: 0;
-  max-width: 34rem;
-  padding-right: 1.5rem;
+  max-width: 32rem;
+  margin-right: 1.5rem;
   font-size: 1.25rem;
   font-weight: 400;
   line-height: 1.2;
   letter-spacing: -0.05em;
+}
+
+.hero-hl-letter {
+  font-weight: 400;
+}
+
+.hero-hl-letter.is-on {
+  font-weight: 900;
 }
 
 .hero-fullname {

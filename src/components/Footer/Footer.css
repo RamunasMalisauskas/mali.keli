@@ -44,8 +44,7 @@
 .contact-tagline {
   margin: 1rem 0 0;
   font-size: 1.25rem;
-  font-weight: 100;
-  font-style: italic;
+  font-weight: 200;
   line-height: 1.2;
   letter-spacing: -0.05em;
   color: color-mix(in srgb, var(--bg) 72%, transparent);
