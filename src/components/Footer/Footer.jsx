@@ -5,36 +5,39 @@ import "./Footer.css";
 export default function Footer() {
   const mail = mailtoHref(footer.email);
   const instagram = httpsHref(footer.instagram.url);
+  const facebook = httpsHref(footer.facebook.url);
 
   return (
     <footer className="contact" id="contact">
-      <h2>Contact</h2>
-      <dl className="details">
-        <div>
-          <dd>{footer.studio}</dd>
-        </div>
-        <div>
-          <dt>Email</dt>
-          <dd>{mail ? <a href={mail}>{footer.email}</a> : footer.email}</dd>
-        </div>
-        <div>
-          <dt>Instagram</dt>
-          <dd>
-            {instagram ? (
-              <a href={instagram} rel="noopener noreferrer" target="_blank">
-                {footer.instagram.handle}
-              </a>
-            ) : (
-              footer.instagram.handle
-            )}
-          </dd>
-        </div>
-        <div>
-          {/* <dt>Inquiries</dt>
-          <dd>{footer.inquiries}</dd> */}
-        </div>
-      </dl>
-      <span className="contact-dot work-dot" aria-hidden="true" />
+      <div className="contact-copy">
+        <p className="contact-name">{footer.studio}</p>
+        <p className="contact-tagline">{footer.tagline}</p>
+        <nav className="contact-links" aria-label="Contact">
+          {mail ? (
+            <a href={mail}>〰️ email</a>
+          ) : (
+            <span>〰️ email</span>
+          )}
+          {instagram ? (
+            <a href={instagram} rel="noopener noreferrer" target="_blank">
+              〰️ instagram
+            </a>
+          ) : (
+            <span>〰️ instagram</span>
+          )}
+          {facebook ? (
+            <a href={facebook} rel="noopener noreferrer" target="_blank">
+              〰️ facebook
+            </a>
+          ) : (
+            <span>〰️ facebook</span>
+          )}
+        </nav>
+      </div>
+      <p className="hero-mark contact-mark">
+        <span className="work-dot" aria-hidden="true" />
+        Contacts
+      </p>
     </footer>
   );
 }

@@ -1,17 +1,18 @@
 .page {
-  --side: 33.333%;
+  --side: 25%;
   --spine-x: calc(100% - var(--side) / 2);
   --spine-width: 2px;
   --spine-color: color-mix(in srgb, var(--ink) 18%, transparent);
   --hero-copy-pad: 2em;
   --hero-name-size: clamp(1.45rem, 2.2vw, 2.1rem);
+  --hero-top-h: calc(100vw * 1.05 / 2.07 * 479 / 319);
   position: relative;
   min-height: 100svh;
 }
 
 .spine {
   position: absolute;
-  top: calc(100svh + var(--hero-copy-pad) + var(--dot-size) / 2);
+  top: calc(var(--hero-top-h) * 0.57 + var(--dot-size) / 2);
   bottom: var(--spine-inset);
   left: var(--spine-x);
   width: var(--spine-width);

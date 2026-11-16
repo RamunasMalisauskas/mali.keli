@@ -37,11 +37,17 @@ img {
   display: block;
 }
 
+/* h1 {
+  font-family: "Climate Crisis", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings: "YEAR" 1979;
+} */
+
 h1 {
-  font-family: "Raleway", serif;
-  font-weight: 500;
-  font-size: 2.2rem;
-  line-height: 1.2;
+  font-family: "Impact", serif;
+  font-weight: 900;
   margin: 0;
 }
 
@@ -111,5 +117,10 @@ button {
 
   .work-dot::after {
     animation: none;
+  }
+
+  .hero-nav a::after,
+  .hero-filters li::after {
+    transition: none;
   }
 }
