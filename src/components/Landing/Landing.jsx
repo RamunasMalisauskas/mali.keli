@@ -1,15 +1,6 @@
 import { assetSrc } from "../../lib/safe.js";
 import "./Landing.css";
 
-const FILTERS = [
-  "installations",
-  "workshops",
-  "community",
-  "accessories",
-  "fashion",
-  "fabrics",
-];
-
 const SLOW_RATE = 0.85;
 const setSlowPlay = (event) => {
   event.currentTarget.playbackRate = SLOW_RATE;
@@ -96,11 +87,7 @@ export default function Landing() {
           Works
         </p>
       </div>
-      <ul className="hero-filters">
-        {FILTERS.map((filter) => (
-          <li key={filter}>〰️ {filter}</li>
-        ))}
-      </ul>
+      <p className="hero-coming">Works under construction</p>
     </header>
   );
 }

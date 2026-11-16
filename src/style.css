@@ -119,8 +119,7 @@ button {
     animation: none;
   }
 
-  .hero-nav a::after,
-  .hero-filters li::after {
+  .hero-nav a::after {
     transition: none;
   }
 }
