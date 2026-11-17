@@ -42,7 +42,9 @@ export default function GalleryItem({ work }) {
             height="800"
             loading="lazy"
           />
-        ) : null}
+        ) : (
+          "images incoming..."
+        )}
         <span className="work-pill" aria-hidden="true">
           {open ? "Close" : "More info"}
         </span>

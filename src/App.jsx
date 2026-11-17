@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Landing, GalleryItem, Footer } from "./components";
+import { workMatchesFilter } from "./components/Landing/Landing.jsx";
 import Upload from "./components/Upload/Upload.jsx";
 import { works as fallbackWorks } from "./data/works.js";
 import { fetchWorks } from "./lib/sheet.js";
@@ -10,6 +11,7 @@ const SHOW_GALLERY = true;
 
 function Home() {
   const [works, setWorks] = useState(SHOW_GALLERY ? fallbackWorks : []);
+  const [activeFilter, setActiveFilter] = useState("");
 
   useEffect(() => {
     if (!SHOW_GALLERY) return undefined;
@@ -28,12 +30,17 @@ function Home() {
   return (
     <div className="page">
       <div className="spine" aria-hidden="true" />
-      <Landing />
+      <Landing
+        activeFilter={activeFilter}
+        onFilterChange={setActiveFilter}
+      />
       {SHOW_GALLERY ? (
         <main>
-          {works.map((work) => (
-            <GalleryItem key={work.id} work={work} />
-          ))}
+          {works
+            .filter((work) => workMatchesFilter(work, activeFilter))
+            .map((work) => (
+              <GalleryItem key={work.id} work={work} />
+            ))}
         </main>
       ) : null}
       <Footer />

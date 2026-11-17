@@ -83,7 +83,9 @@
 }
 
 .hero-nav a:hover,
-.hero-nav a:focus-visible {
+.hero-nav a:focus-visible,
+.hero-filters button:hover,
+.hero-filters button:focus-visible {
   text-decoration: underline wavy;
   text-decoration-thickness: 1.5px;
   text-underline-offset: 0.22em;
@@ -165,6 +167,35 @@
   z-index: 2;
 }
 
+.hero-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.6rem;
+  margin: 0.4rem 0 0;
+  padding: 0 1.5rem;
+  list-style: none;
+  font-size: 1.25rem;
+  letter-spacing: -0.05em;
+}
+
+.hero-filters button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.hero-filters button.is-active {
+  font-weight: 900;
+}
+
 @media (max-width: 800px) {
   .hero-top,
   .hero-bottom {
@@ -208,5 +239,9 @@
   .hero-works-mark {
     justify-self: start;
     padding: 1rem;
+  }
+
+  .hero-filters {
+    padding: 0 1rem;
   }
 }

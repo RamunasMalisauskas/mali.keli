@@ -8,7 +8,40 @@ const setSlowPlay = (event) => {
   event.currentTarget.playbackRate = SLOW_RATE;
 };
 
-export default function Landing() {
+export const FILTERS = [
+  "installations",
+  "workshops",
+  "community",
+  "accessories",
+  "fashion",
+  "fabrics",
+];
+
+const FILTER_TERMS = {
+  installations: ["installation", "visual arts"],
+  workshops: ["workshop", "education", "co-creation"],
+  community: ["community", "education", "curatorial"],
+  accessories: ["accessor", "wearable"],
+  fashion: ["fashion", "costume", "wearable", "runway"],
+  fabrics: ["fabric", "textile", "zero-waste", "linen"],
+};
+
+export function workMatchesFilter(work, filter) {
+  if (!filter) return true;
+  const hay = [
+    work.index,
+    work.category,
+    work.title,
+    work.technique,
+    work.description,
+    work.association,
+  ]
+    .join(" ")
+    .toLowerCase();
+  return (FILTER_TERMS[filter] ?? [filter]).some((term) => hay.includes(term));
+}
+
+export default function Landing({ activeFilter = "", onFilterChange }) {
   return (
     <header className="hero">
       <div className="hero-top">
@@ -85,6 +118,23 @@ export default function Landing() {
           Works
         </p>
       </div>
+      <ul className="hero-filters">
+        {FILTERS.map((filter) => (
+          <li key={filter}>
+            <button
+              type="button"
+              className={activeFilter === filter ? "is-active" : ""}
+              aria-pressed={activeFilter === filter}
+              onClick={() =>
+                onFilterChange?.(activeFilter === filter ? "" : filter)
+              }
+            >
+              <WaveMark />
+              {filter}
+            </button>
+          </li>
+        ))}
+      </ul>
     </header>
   );
 }
