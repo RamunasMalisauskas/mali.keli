@@ -1,0 +1,15 @@
+.wave-mark {
+  display: inline-block;
+  width: 1.15em;
+  height: 0.38em;
+  flex-shrink: 0;
+  overflow: visible;
+}
+
+.hero-nav a,
+.contact-links a,
+.contact-links span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+}

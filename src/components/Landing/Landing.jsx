@@ -1,5 +1,6 @@
 import { assetSrc } from "../../lib/safe.js";
 import DescriptionPulse from "../DescriptionPulse/DescriptionPulse.jsx";
+import WaveMark from "../WaveMark/WaveMark.jsx";
 import "./Landing.css";
 
 const SLOW_RATE = 0.85;
@@ -42,8 +43,14 @@ export default function Landing() {
         </div>
         <aside className="hero-aside">
           <nav className="hero-nav" aria-label="Page">
-            <a href="#works">〰️ works</a>
-            <a href="#contact">〰️ contacts</a>
+            <a href="#works">
+              <WaveMark />
+              works
+            </a>
+            <a href="#contact">
+              <WaveMark />
+              contacts
+            </a>
           </nav>
           <p className="hero-about">
             Textile Artist & Designer, Educator <br /> Facilitating Creative &
@@ -65,7 +72,6 @@ export default function Landing() {
           <video
             className="hero-video"
             src={assetSrc("/video/malikeli_hero_small.mp4")}
-            poster={assetSrc("/images/clo_1.png")}
             autoPlay
             muted
             loop

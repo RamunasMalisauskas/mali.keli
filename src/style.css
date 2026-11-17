@@ -118,8 +118,4 @@ button {
   .work-dot::after {
     animation: none;
   }
-
-  .hero-nav a::after {
-    transition: none;
-  }
 }

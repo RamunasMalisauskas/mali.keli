@@ -1,5 +1,6 @@
 import { httpsHref, mailtoHref } from "../../lib/safe.js";
 import { footer } from "../../data/footer.js";
+import WaveMark from "../WaveMark/WaveMark.jsx";
 import "./Footer.css";
 
 export default function Footer() {
@@ -13,20 +14,38 @@ export default function Footer() {
         <p className="contact-name">{footer.studio}</p>
         <p className="contact-tagline">{footer.tagline}</p>
         <nav className="contact-links" aria-label="Contact">
-          {mail ? <a href={mail}>〰️ email</a> : <span>〰️ email</span>}
-          {instagram ? (
-            <a href={instagram} rel="noopener noreferrer" target="_blank">
-              〰️ instagram
+          {mail ? (
+            <a href={mail}>
+              <WaveMark />
+              email
             </a>
           ) : (
-            <span>〰️ instagram</span>
+            <span>
+              <WaveMark />
+              email
+            </span>
+          )}
+          {instagram ? (
+            <a href={instagram} rel="noopener noreferrer" target="_blank">
+              <WaveMark />
+              instagram
+            </a>
+          ) : (
+            <span>
+              <WaveMark />
+              instagram
+            </span>
           )}
           {facebook ? (
             <a href={facebook} rel="noopener noreferrer" target="_blank">
-              〰️ facebook
+              <WaveMark />
+              facebook
             </a>
           ) : (
-            <span>〰️ facebook</span>
+            <span>
+              <WaveMark />
+              facebook
+            </span>
           )}
         </nav>
       </div>
