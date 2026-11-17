@@ -1,0 +1,23 @@
+.hero-description {
+  margin: 0;
+  max-width: 28rem;
+  padding-right: 0.5rem;
+  font-size: 1.25rem;
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -0.05em;
+}
+
+.hero-hl-letter {
+  font-weight: 400;
+}
+
+.hero-hl-letter.is-on {
+  font-weight: 900;
+}
+
+@media (max-width: 800px) {
+  .hero-description {
+    display: none;
+  }
+}

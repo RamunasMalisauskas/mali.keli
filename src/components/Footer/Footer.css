@@ -62,31 +62,20 @@
 
 .contact-links a,
 .contact-links span {
-  position: relative;
   width: max-content;
   color: inherit;
+  text-decoration: none;
 }
 
 .contact-links a {
   cursor: pointer;
 }
 
-.contact-links a::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -0.12em;
-  width: 100%;
-  height: var(--spine-width, 2px);
-  background: var(--bg);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.contact-links a:hover::after,
-.contact-links a:focus-visible::after {
-  transform: scaleX(1);
+.contact-links a:hover,
+.contact-links a:focus-visible {
+  text-decoration: underline wavy;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 0.22em;
 }
 
 .contact-mark {
@@ -134,8 +123,3 @@
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .contact-links a::after {
-    transition: none;
-  }
-}
