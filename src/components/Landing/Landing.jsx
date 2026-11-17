@@ -3,7 +3,7 @@ import DescriptionPulse from "../DescriptionPulse/DescriptionPulse.jsx";
 import WaveMark from "../WaveMark/WaveMark.jsx";
 import "./Landing.css";
 
-const SLOW_RATE = 0.85;
+const SLOW_RATE = 0.65;
 const setSlowPlay = (event) => {
   event.currentTarget.playbackRate = SLOW_RATE;
 };
@@ -77,7 +77,7 @@ export default function Landing() {
             loop
             playsInline
             preload="auto"
-            onPlay={setSlowPlay}
+            // onPlay={setSlowPlay}
           />
         </div>
         <p className="hero-mark hero-works-mark" id="works">
@@ -85,7 +85,6 @@ export default function Landing() {
           Works
         </p>
       </div>
-      <p className="hero-coming">Works under construction</p>
     </header>
   );
 }

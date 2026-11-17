@@ -6,7 +6,7 @@ import { works as fallbackWorks } from "./data/works.js";
 import { fetchWorks } from "./lib/sheet.js";
 import "./App.css";
 
-const SHOW_GALLERY = false;
+const SHOW_GALLERY = true;
 
 function Home() {
   const [works, setWorks] = useState(SHOW_GALLERY ? fallbackWorks : []);
@@ -30,7 +30,7 @@ function Home() {
       <div className="spine" aria-hidden="true" />
       <Landing />
       {SHOW_GALLERY ? (
-        <main id="works">
+        <main>
           {works.map((work) => (
             <GalleryItem key={work.id} work={work} />
           ))}

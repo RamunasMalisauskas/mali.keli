@@ -1,29 +1,79 @@
 export const SHEET_URL =
   "https://script.google.com/macros/s/AKfycbzgxaBsRQMg4yYRAPc7gdwRjCgFYY8hYgumPVVxvoiKqNK8UrLmbrl8Dd3yJhOr0o0/exec";
 
+/**
+ * GET returns:
+ * {
+ *   works: [{
+ *     id: string,
+ *     index: string,
+ *     title: string,
+ *     association: string,
+ *     year: string | number,
+ *     description: string,
+ *     technique: string,
+ *     location: string,
+ *     category: string,
+ *     extraImages: [{ id: string, src: string, alt: string }]
+ *   }]
+ * }
+ *
+ * Cover `image` / `alt` are optional. Placeholder extras (clo_/acc_) are dropped.
+ */
+
 function asText(value) {
   return value == null ? "" : String(value);
 }
 
+function slugFrom(title, index) {
+  const fromTitle = asText(title)
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+  if (fromTitle) return fromTitle;
+  return (
+    asText(index)
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-|-$/g, "") || "work"
+  );
+}
+
+function isPlaceholderSrc(src) {
+  return /\/images\/(clo_|acc_|work-|hero)/.test(src);
+}
+
 export function normalizeWork(raw) {
-  const id = asText(raw?.id).trim();
+  const extraImages = (
+    Array.isArray(raw?.extraImages) ? raw.extraImages : []
+  )
+    .map((item) => ({
+      id: asText(item?.id),
+      src: asText(item?.src),
+      alt: asText(item?.alt),
+    }))
+    .filter((item) => item.src && !isPlaceholderSrc(item.src));
+  const id = asText(raw?.id).trim() || slugFrom(raw?.title, raw?.index);
+  const rawImage = asText(raw?.image);
+  const image =
+    rawImage && !isPlaceholderSrc(rawImage)
+      ? rawImage
+      : extraImages[0]?.src || "";
+  const alt = asText(raw?.alt) || extraImages[0]?.alt || asText(raw?.title);
+
   return {
     id,
     index: asText(raw?.index),
     title: asText(raw?.title),
+    association: asText(raw?.association),
     year: asText(raw?.year),
     description: asText(raw?.description),
-    image: asText(raw?.image),
-    alt: asText(raw?.alt),
+    image,
+    alt,
     technique: asText(raw?.technique),
     location: asText(raw?.location),
-    extraImages: (Array.isArray(raw?.extraImages) ? raw.extraImages : []).map(
-      (item) => ({
-        id,
-        src: asText(item?.src),
-        alt: asText(item?.alt),
-      }),
-    ),
+    category: asText(raw?.category),
+    extraImages,
   };
 }
 

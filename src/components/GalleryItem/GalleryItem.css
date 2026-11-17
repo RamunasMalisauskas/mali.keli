@@ -1,6 +1,6 @@
 .work {
   display: grid;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: calc(100% - var(--side, 25%)) var(--side, 25%);
   align-items: stretch;
   padding: clamp(2.6rem, 5vw, 4rem) 0;
 }
@@ -11,7 +11,7 @@
   width: min(100%, 42rem);
   padding: 0;
   border: 0;
-  background: #161412;
+  background: color-mix(in srgb, var(--ink) 6%, var(--bg));
   overflow: hidden;
   cursor: pointer;
   aspect-ratio: 4 / 3;
@@ -67,11 +67,6 @@
   grid-template-rows: 1fr auto 1fr;
   align-self: stretch;
   min-height: 0;
-  transition: grid-template-rows 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.work.is-copy-down .work-copy {
-  grid-template-rows: 1fr auto 0fr;
 }
 
 .work-copy-inner {
@@ -85,13 +80,16 @@
   display: grid;
   gap: 0.7rem;
   justify-items: end;
+  justify-self: end;
   text-align: right;
   padding-right: 0.4rem;
+  width: 300%;
+  min-width: 0;
 }
 
 .work-text p {
   margin: 0;
-  max-width: 28ch;
+  max-width: 38ch;
   color: var(--muted);
   font-size: clamp(0.92rem, 1.3vw, 1.05rem);
 }
@@ -105,6 +103,7 @@
 
 .work h2 {
   margin: 0;
+  max-width: none;
   font-family: "Raleway", serif;
   font-size: clamp(1.7rem, 3vw, 2.6rem);
   font-weight: 500;
@@ -181,6 +180,15 @@
   font-size: 1.25rem;
 }
 
+.work-description {
+  margin: 0;
+  max-width: 112ch;
+  color: var(--muted);
+  font-size: clamp(0.92rem, 1.3vw, 1.05rem);
+  line-height: 1.45;
+  white-space: pre-line;
+}
+
 .work-gallery {
   display: flex;
   gap: 0.8rem;
@@ -191,15 +199,21 @@
   -webkit-overflow-scrolling: touch;
 }
 
-.work-gallery img {
+.work-gallery img,
+.work-gallery-slot {
   flex: 0 0 min(48vw, 22rem);
   width: min(48vw, 22rem);
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 5 / 4;
   height: auto;
   object-fit: cover;
   scroll-snap-align: start;
   border-radius: var(--media-radius);
   corner-shape: squircle;
+}
+
+.work-gallery-slot {
+  display: block;
+  background: color-mix(in srgb, var(--ink) 6%, var(--bg));
 }
 
 @media (max-width: 800px) {
@@ -215,15 +229,15 @@
   }
 
   .work-text {
+    width: auto;
+    justify-self: start;
     justify-items: start;
     text-align: left;
   }
 
-  .work-copy,
-  .work.is-copy-down .work-copy {
+  .work-copy {
     padding: 1.2rem 1rem 0;
     grid-template-rows: auto;
-    transition: none;
   }
 
   .work-copy-inner {
@@ -239,8 +253,7 @@
 @media (prefers-reduced-motion: reduce) {
   .work-media img,
   .work-pill,
-  .work-extra,
-  .work-copy {
+  .work-extra {
     transition: none;
   }
 

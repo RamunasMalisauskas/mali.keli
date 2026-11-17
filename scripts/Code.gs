@@ -3,10 +3,16 @@
  * then Deploy > Web app (Execute as: Me, Who has access: Anyone).
  *
  * Sheets:
- *   Works        — id, index, title, year, description, image, alt, technique, location
- *   ExtraImages  — id, src, alt  (id matches the work)
+ *   Works        — id, index, title, association, year, description, technique, location, category
+ *   ExtraImages  — id, src, alt  (id must match the work)
  *
- * GET  → { works }
+ * GET → {
+ *   works: [{
+ *     id, index, title, association, year, description,
+ *     technique, location, category,
+ *     extraImages: [{ id, src, alt }]
+ *   }]
+ * }
  * POST text/plain JSON:
  *   { action: "replace", works: [...] }
  *   { action: "upsert", work: {...} }
@@ -19,12 +25,12 @@ const WORK_HEADERS = [
   "id",
   "index",
   "title",
+  "association",
   "year",
   "description",
-  "image",
-  "alt",
   "technique",
   "location",
+  "category",
 ];
 const IMAGE_HEADERS = ["id", "src", "alt"];
 

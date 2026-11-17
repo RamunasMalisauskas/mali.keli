@@ -11,12 +11,14 @@ function emptyWork() {
     id: "",
     index: "",
     title: "",
+    association: "",
     year: "",
     description: "",
     image: "",
     alt: "",
     technique: "",
     location: "",
+    category: "",
     extraImages: [],
   };
 }
