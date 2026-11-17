@@ -111,7 +111,7 @@ export default function Landing() {
         <div className="hero-media">
           <video
             className="hero-video"
-            src={assetSrc("/video/hero_rain.mp4")}
+            src={assetSrc("/video/hero_close.mp4")}
             autoPlay
             muted
             loop
