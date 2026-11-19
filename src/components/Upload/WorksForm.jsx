@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { uploadImage } from "../../lib/uploadApi.js";
 import {
   deleteWorkOnSheet,
@@ -31,10 +31,23 @@ function slugFromTitle(title) {
     .replace(/^-|-$/g, "");
 }
 
+function moveItem(list, from, to) {
+  if (from === to || from < 0 || to < 0 || to >= list.length) return list;
+  const next = [...list];
+  const [item] = next.splice(from, 1);
+  next.splice(to, 0, item);
+  return next;
+}
+
 export default function WorksForm() {
   const [list, setList] = useState([]);
   const [editing, setEditing] = useState(null);
   const [status, setStatus] = useState("");
+  const [dragId, setDragId] = useState("");
+  const listRef = useRef([]);
+  const orderBeforeDrag = useRef([]);
+
+  listRef.current = list;
 
   useEffect(() => {
     fetchWorks()
@@ -109,6 +122,50 @@ export default function WorksForm() {
     }
   }
 
+  function onDragStart(event, id) {
+    event.dataTransfer.effectAllowed = "move";
+    event.dataTransfer.setData("text/plain", id);
+    setDragId(id);
+    orderBeforeDrag.current = list.map((work) => work.id);
+  }
+
+  function onDragOver(event, overId) {
+    event.preventDefault();
+    event.dataTransfer.dropEffect = "move";
+    if (!dragId || dragId === overId) return;
+    setList((current) => {
+      const from = current.findIndex((work) => work.id === dragId);
+      const to = current.findIndex((work) => work.id === overId);
+      return moveItem(current, from, to);
+    });
+  }
+
+  async function onDragEnd() {
+    setDragId("");
+    const next = listRef.current;
+    const same =
+      next.map((work) => work.id).join() === orderBeforeDrag.current.join();
+    if (same) return;
+    try {
+      await persist(next);
+    } catch (error) {
+      setList(
+        orderBeforeDrag.current
+          .map((id) => next.find((work) => work.id === id))
+          .filter(Boolean),
+      );
+      setStatus(error.message);
+    }
+  }
+
+  function moveWork(id, offset) {
+    const from = list.findIndex((work) => work.id === id);
+    const next = moveItem(list, from, from + offset);
+    if (next === list) return;
+    setList(next);
+    persist(next).catch((error) => setStatus(error.message));
+  }
+
   async function removeWork(id) {
     if (!window.confirm("Remove this work from the sheet?")) return;
     setStatus("Saving to Google Sheet…");
@@ -125,9 +182,35 @@ export default function WorksForm() {
   return (
     <section className="upload-form">
       <h2>Works</h2>
+      <p className="upload-hint">Drag the handle to change gallery order.</p>
       <ul className="upload-work-list">
-        {list.map((work) => (
-          <li key={work.id}>
+        {list.map((work, position) => (
+          <li
+            key={work.id || `work-${position}`}
+            className={dragId === work.id ? "is-dragging" : ""}
+            onDragOver={(event) => onDragOver(event, work.id)}
+            onDrop={(event) => event.preventDefault()}
+          >
+            <button
+              type="button"
+              className="upload-drag"
+              draggable
+              aria-label={`Reorder ${work.title || work.id}`}
+              onDragStart={(event) => onDragStart(event, work.id)}
+              onDragEnd={onDragEnd}
+              onKeyDown={(event) => {
+                if (event.key === "ArrowUp") {
+                  event.preventDefault();
+                  moveWork(work.id, -1);
+                }
+                if (event.key === "ArrowDown") {
+                  event.preventDefault();
+                  moveWork(work.id, 1);
+                }
+              }}
+            >
+              ⋮⋮
+            </button>
             <span>
               {work.index} — {work.title}
             </span>

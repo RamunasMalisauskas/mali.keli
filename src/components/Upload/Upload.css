@@ -66,11 +66,39 @@
   gap: 0.6rem;
 }
 
+.upload-hint {
+  margin: 0;
+  font-size: 0.85rem;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--muted);
+}
+
 .upload-work-list li {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
   gap: 0.8rem;
   align-items: center;
+  padding: 0.45rem 0.55rem;
+  border: 1px solid color-mix(in srgb, var(--ink) 12%, transparent);
+  background: color-mix(in srgb, var(--bg) 70%, white);
+}
+
+.upload-work-list li.is-dragging {
+  opacity: 0.45;
+}
+
+.upload-drag {
+  justify-self: start;
+  padding: 0.35rem 0.45rem;
+  border-color: transparent;
+  letter-spacing: 0.12em;
+  cursor: grab;
+  color: var(--muted);
+}
+
+.upload-drag:active {
+  cursor: grabbing;
 }
 
 .upload-actions {
