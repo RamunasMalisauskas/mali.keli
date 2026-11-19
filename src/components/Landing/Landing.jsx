@@ -1,5 +1,6 @@
 import { assetSrc } from "../../lib/safe.js";
 import DescriptionPulse from "../DescriptionPulse/DescriptionPulse.jsx";
+import HeroName from "../HeroName/HeroName.jsx";
 import WaveMark from "../WaveMark/WaveMark.jsx";
 import "./Landing.css";
 
@@ -57,23 +58,7 @@ export default function Landing({ activeFilter = "", onFilterChange }) {
             onPlay={setSlowPlay}
           />
         </div>
-        <div className="hero-name">
-          <h1>
-            Ieva
-            <br />
-            Keli
-            <br />
-            ausk
-            <br />
-            aitė
-            <br />-<br />
-            Mali
-            <br />
-            šau
-            <br />
-            skė
-          </h1>
-        </div>
+        <HeroName />
         <aside className="hero-aside">
           <nav className="hero-nav" aria-label="Page">
             <a href="#works">

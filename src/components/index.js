@@ -3,3 +3,4 @@ export { default as DescriptionPulse } from "./DescriptionPulse/DescriptionPulse
 export { default as GalleryItem } from "./GalleryItem/GalleryItem.jsx";
 export { default as Footer } from "./Footer/Footer.jsx";
 export { default as WaveMark } from "./WaveMark/WaveMark.jsx";
+export { default as HeroName } from "./HeroName/HeroName.jsx";

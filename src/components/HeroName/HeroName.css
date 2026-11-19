@@ -1,0 +1,51 @@
+.hero-name h1 {
+  position: relative;
+  margin: 0;
+  height: 100%;
+  font-family: "Raleway", sans-serif;
+  font-weight: 900;
+  font-size: clamp(3.2rem, 7.6vw, 5.8rem);
+  line-height: 0.94;
+  letter-spacing: -0.05em;
+  text-transform: uppercase;
+  color: var(--bg);
+}
+
+.hero-name-fallback {
+  display: block;
+}
+
+.hero-name-line {
+  display: block;
+  position: relative;
+  height: 0.94em;
+}
+
+.hero-name-letter {
+  position: absolute;
+  top: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  white-space: pre;
+  will-change: transform;
+  pointer-events: none;
+  color: var(--bg);
+}
+
+.hero-name-letter:hover {
+  cursor: pointer;
+  color: var(--dark);
+}
+
+@media (max-width: 800px) {
+  .hero-name h1 {
+    font-size: 4.2rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-name-letter {
+    transform: none !important;
+  }
+}
