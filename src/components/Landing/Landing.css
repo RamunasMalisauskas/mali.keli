@@ -193,6 +193,7 @@
 
   .hero-name {
     height: auto;
+    min-height: 625px;
   }
 
   .hero-aside {
