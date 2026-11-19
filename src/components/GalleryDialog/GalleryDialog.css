@@ -1,0 +1,67 @@
+.gallery-dialog {
+  width: min(94vw, 76rem);
+  max-width: 94vw;
+  max-height: 94vh;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  overflow: visible;
+}
+
+.gallery-dialog::backdrop {
+  background: color-mix(in srgb, var(--dark) 78%, transparent);
+}
+
+.gallery-dialog-frame {
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+
+.gallery-dialog-frame img {
+  max-width: 94vw;
+  max-height: 86vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: var(--media-radius);
+  corner-shape: squircle;
+}
+
+.gallery-dialog .work-pill {
+  position: absolute;
+  padding: 0.5rem 0.95rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 0.68rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  opacity: 1;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.gallery-dialog-prev,
+.gallery-dialog-next {
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.1rem;
+  letter-spacing: 0;
+  padding: 0.55rem 0.85rem;
+}
+
+.gallery-dialog-prev {
+  left: 0.8rem;
+}
+
+.gallery-dialog-next {
+  right: 0.8rem;
+}
+
+.gallery-dialog-close {
+  top: 0.8rem;
+  right: 0.8rem;
+}

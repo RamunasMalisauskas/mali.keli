@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { assetSrc, prefersReducedMotion, slugId } from "../../lib/safe.js";
+import GalleryDialog from "../GalleryDialog/GalleryDialog.jsx";
 import "./GalleryItem.css";
 
 const OPEN_SCROLL_PX = 40;
@@ -7,9 +8,13 @@ const EMPTY_SLOTS = 3;
 
 export default function GalleryItem({ work }) {
   const [open, setOpen] = useState(false);
+  const [zoom, setZoom] = useState(-1);
   const extraId = `work-extra-${slugId(work.id)}`;
   const cover = assetSrc(work.image);
-  const extras = work.extraImages ?? [];
+  const extras = (work.extraImages ?? [])
+    .map((item) => ({ src: assetSrc(item.src), alt: item.alt }))
+    .filter((item) => item.src);
+  const slides = [...(cover ? [{ src: cover, alt: work.alt }] : []), ...extras];
   const facts = [
     ["Technique", work.technique],
     ["Location", work.location],
@@ -83,12 +88,18 @@ export default function GalleryItem({ work }) {
           <div className="work-gallery">
             {extras.length
               ? extras.map((item, index) => (
-                  <img
+                  <button
                     key={`${item.src}-${index}`}
-                    src={assetSrc(item.src)}
-                    alt={item.alt}
-                    loading="lazy"
-                  />
+                    className="work-gallery-item"
+                    type="button"
+                    aria-label={`Zoom in ${item.alt || `${work.title} image ${index + 1}`}`}
+                    onClick={() => setZoom(cover ? index + 1 : index)}
+                  >
+                    <img src={item.src} alt="" loading="lazy" />
+                    <span className="work-pill" aria-hidden="true">
+                      Zoom in
+                    </span>
+                  </button>
                 ))
               : Array.from({ length: EMPTY_SLOTS }, (_, index) => (
                   <span
@@ -100,6 +111,14 @@ export default function GalleryItem({ work }) {
           </div>
         </div>
       </div>
+      {zoom >= 0 ? (
+        <GalleryDialog
+          slides={slides}
+          title={work.title}
+          startIndex={zoom}
+          onClose={() => setZoom(-1)}
+        />
+      ) : null}
     </article>
   );
 }
