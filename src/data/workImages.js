@@ -68,12 +68,12 @@ export const workFolderImages = {
     "/images/Mental Candy/MKlookbook-101.jpg",
     "/images/Mental Candy/MKlookbook-110.jpg",
   ],
-  "Motinystės ištrauktinis": [
-    "/images/Motinystės ištrauktinis/IMG_8885.jpg",
-    "/images/Motinystės ištrauktinis/IMG_8886.jpg",
-    "/images/Motinystės ištrauktinis/IMG_8887.jpg",
-    "/images/Motinystės ištrauktinis/IMG_8888.jpg",
-    "/images/Motinystės ištrauktinis/IMG_8889.jpg",
+  Isstrauktinis: [
+    "/images/Istrauktinis/IMG_8885.jpg",
+    "/images/Istrauktinis/IMG_8886.jpg",
+    "/images/Istrauktinis/IMG_8887.jpg",
+    "/images/Istrauktinis/IMG_8888.jpg",
+    "/images/Istrauktinis/IMG_8889.jpg",
   ],
   "Nemuno veidas": [
     "/images/Nemuno veidas/file.jpg",
