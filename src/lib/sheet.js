@@ -17,6 +17,8 @@ const FIELDS = [
 
 const FOLDER_ALIASES = {
   nemunoveidas: "thefaceofthenemunas",
+  motinystesistrauktinis:
+    "drawnthreadworkorwhatremainsbetweenthreadstextileandmaternalexperiences",
 };
 
 function asText(value) {
@@ -50,8 +52,17 @@ function isPlaceholderSrc(src) {
   return /\/images\/(clo_|acc_|work-|hero)/.test(src);
 }
 
+function sortKey(id) {
+  return /^\d+$/.test(asText(id).trim())
+    ? Number(asText(id).trim())
+    : Number.POSITIVE_INFINITY;
+}
+
 function mediaFor(work, library) {
-  const keys = [foldKey(work.title), foldKey(work.id)].filter(Boolean);
+  const keys = [
+    foldKey(work.title),
+    sortKey(work.id) === Number.POSITIVE_INFINITY ? foldKey(work.id) : "",
+  ].filter(Boolean);
   for (const [name, files] of Object.entries(library)) {
     const key = foldKey(name);
     if (keys.includes(key) || keys.includes(FOLDER_ALIASES[key] ?? "")) {
@@ -66,13 +77,13 @@ function toExtra(work, src, alt) {
 }
 
 function withFolderMedia(work) {
-  if (work.hide) return work;
   const photos = mediaFor(work, workFolderImages);
   const videos = mediaFor(work, workFolderVideos);
   if (!photos.length && !videos.length) return work;
   const [cover, ...rest] = photos;
   return {
     ...work,
+    hide: false,
     image: cover || work.image,
     alt: work.alt || work.title,
     extraImages: [
@@ -128,6 +139,7 @@ export function orderWorks(works) {
     .sort(
       (a, b) =>
         Number(a.hide) - Number(b.hide) ||
+        sortKey(a.id) - sortKey(b.id) ||
         yearKey(b.year) - yearKey(a.year) ||
         a.title.localeCompare(b.title, "lt"),
     )

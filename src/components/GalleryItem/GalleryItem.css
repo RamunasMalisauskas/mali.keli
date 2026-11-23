@@ -93,6 +93,7 @@
 
 .work h2 {
   margin: 0;
+  width: 100%;
   max-width: none;
   font-family: "Raleway", serif;
   font-size: clamp(1.7rem, 3vw, 2.6rem);

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { assetSrc, prefersReducedMotion, slugId } from "../../lib/safe.js";
 import GalleryDialog from "../GalleryDialog/GalleryDialog.jsx";
+import PretextLetters from "../PretextLetters/PretextLetters.jsx";
 import WorkMedia from "../WorkMedia/WorkMedia.jsx";
 import "./GalleryItem.css";
 
@@ -59,10 +60,10 @@ export default function GalleryItem({ work }) {
       <div className="work-copy">
         <div className="work-copy-inner">
           <div className="work-text">
-            <h2>
-              {work.number ? `${work.number} - ` : null}
-              {work.title}
-            </h2>
+            <PretextLetters
+              as="h2"
+              text={`${work.number ? `${work.number} - ` : ""}${work.title}`}
+            />
           </div>
           <span className="work-dot" aria-hidden="true" />
           <p className="work-date">{work.year}</p>

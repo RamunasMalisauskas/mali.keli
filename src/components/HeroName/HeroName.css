@@ -11,41 +11,12 @@
   color: var(--bg);
 }
 
-.hero-name-fallback {
-  display: block;
-}
-
-.hero-name-line {
-  display: block;
-  position: relative;
-  height: 0.94em;
-}
-
-.hero-name-letter {
-  position: absolute;
-  top: 0;
-  display: flex;
-  align-items: flex-end;
-  justify-content: flex-start;
-  white-space: pre;
-  will-change: transform;
-  pointer-events: none;
+.hero-name .pretext-letter {
   color: var(--bg);
-}
-
-.hero-name-letter:hover {
-  cursor: pointer;
-  color: var(--dark);
 }
 
 @media (max-width: 800px) {
   .hero-name h1 {
     font-size: 4.2rem;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hero-name-letter {
-    transform: none !important;
   }
 }
