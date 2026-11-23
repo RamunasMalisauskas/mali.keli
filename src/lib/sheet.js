@@ -1,3 +1,5 @@
+import { workFolderImages } from "../data/workImages.js";
+
 export const SHEET_URL =
   "https://script.google.com/macros/s/AKfycbzgxaBsRQMg4yYRAPc7gdwRjCgFYY8hYgumPVVxvoiKqNK8UrLmbrl8Dd3yJhOr0o0/exec";
 
@@ -41,6 +43,49 @@ function slugFrom(title, index) {
 
 function isPlaceholderSrc(src) {
   return /\/images\/(clo_|acc_|work-|hero)/.test(src);
+}
+
+function foldKey(value) {
+  return asText(value)
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/\p{M}/gu, "")
+    .replace(/[^a-z0-9]+/g, "");
+}
+
+const FOLDER_ALIASES = {
+  nemunoveidas: "thefaceofthenemunas",
+};
+
+function encodeAsset(path) {
+  return encodeURI(path);
+}
+
+function folderImagesFor(work) {
+  const keys = [foldKey(work.title), foldKey(work.id)].filter(Boolean);
+  for (const [folder, files] of Object.entries(workFolderImages)) {
+    const folderKey = foldKey(folder);
+    if (keys.includes(folderKey) || keys.includes(FOLDER_ALIASES[folderKey] ?? "")) {
+      return files.map(encodeAsset);
+    }
+  }
+  return [];
+}
+
+function withFolderImages(work) {
+  const files = folderImagesFor(work);
+  if (!files.length) return work;
+  const [cover, ...rest] = files;
+  return {
+    ...work,
+    image: cover,
+    alt: work.alt || work.title,
+    extraImages: rest.map((src, index) => ({
+      id: work.id,
+      src,
+      alt: `${work.title} ${index + 2}`,
+    })),
+  };
 }
 
 export function normalizeWork(raw) {
@@ -91,6 +136,7 @@ export function yearKey(year) {
 
 export function orderWorks(works) {
   return [...works]
+    .map(withFolderImages)
     .sort(
       (a, b) =>
         yearKey(b.year) - yearKey(a.year) ||
