@@ -4,13 +4,15 @@ import { Landing, GalleryItem, Footer } from "./components";
 import { workMatchesFilter } from "./components/Landing/Landing.jsx";
 import Upload from "./components/Upload/Upload.jsx";
 import { works as fallbackWorks } from "./data/works.js";
-import { fetchWorks } from "./lib/sheet.js";
+import { fetchWorks, orderWorks } from "./lib/sheet.js";
 import "./App.css";
 
 const SHOW_GALLERY = true;
 
 function Home() {
-  const [works, setWorks] = useState(SHOW_GALLERY ? fallbackWorks : []);
+  const [works, setWorks] = useState(
+    SHOW_GALLERY ? orderWorks(fallbackWorks) : [],
+  );
   const [activeFilter, setActiveFilter] = useState("");
 
   useEffect(() => {

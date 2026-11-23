@@ -60,8 +60,10 @@ export default function GalleryItem({ work }) {
       <div className="work-copy">
         <div className="work-copy-inner">
           <div className="work-text">
-            <p className="index">{work.index}</p>
-            <h2>{work.title}</h2>
+            <h2>
+              {work.number ? `${work.number} - ` : null}
+              {work.title}
+            </h2>
           </div>
           <span className="work-dot" aria-hidden="true" />
           <p className="work-date">{work.year}</p>

@@ -44,9 +44,7 @@ function isPlaceholderSrc(src) {
 }
 
 export function normalizeWork(raw) {
-  const extraImages = (
-    Array.isArray(raw?.extraImages) ? raw.extraImages : []
-  )
+  const extraImages = (Array.isArray(raw?.extraImages) ? raw.extraImages : [])
     .map((item) => ({
       id: asText(item?.id),
       src: asText(item?.src),
@@ -85,10 +83,29 @@ async function readJson(response) {
   return body;
 }
 
+export function yearKey(year) {
+  const years = String(year ?? "").match(/\d{4}/g);
+  if (!years) return Number.NEGATIVE_INFINITY;
+  return Math.max(...years.map(Number));
+}
+
+export function orderWorks(works) {
+  return [...works]
+    .sort(
+      (a, b) =>
+        yearKey(b.year) - yearKey(a.year) ||
+        a.title.localeCompare(b.title, "lt"),
+    )
+    .map((work, index) => ({
+      ...work,
+      number: String(index + 1).padStart(2, "0"),
+    }));
+}
+
 export async function fetchWorks() {
   const response = await fetch(SHEET_URL, { method: "GET" });
   const body = await readJson(response);
-  return (body.works ?? []).map(normalizeWork);
+  return orderWorks((body.works ?? []).map(normalizeWork));
 }
 
 async function postSheet(payload) {
