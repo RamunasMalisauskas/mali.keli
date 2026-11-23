@@ -43,25 +43,6 @@ export default function GalleryDialog({ slides, title, startIndex, onClose }) {
     >
       {current ? (
         <div className="gallery-dialog-frame">
-          <img src={current.src} alt={current.alt} />
-          {slides.length > 1 ? (
-            <>
-              <button
-                type="button"
-                className="work-pill gallery-dialog-prev"
-                onClick={() => step(-1)}
-              >
-                ←<span className="sr-only">Previous image</span>
-              </button>
-              <button
-                type="button"
-                className="work-pill gallery-dialog-next"
-                onClick={() => step(1)}
-              >
-                →<span className="sr-only">Next image</span>
-              </button>
-            </>
-          ) : null}
           <button
             type="button"
             className="work-pill gallery-dialog-close"
@@ -69,6 +50,29 @@ export default function GalleryDialog({ slides, title, startIndex, onClose }) {
           >
             Close
           </button>
+          {slides.length > 1 ? (
+            <button
+              type="button"
+              className="work-pill gallery-dialog-prev"
+              onClick={() => step(-1)}
+            >
+              ←<span className="sr-only">Previous image</span>
+            </button>
+          ) : (
+            <span className="gallery-dialog-spacer" aria-hidden="true" />
+          )}
+          <img src={current.src} alt={current.alt} />
+          {slides.length > 1 ? (
+            <button
+              type="button"
+              className="work-pill gallery-dialog-next"
+              onClick={() => step(1)}
+            >
+              →<span className="sr-only">Next image</span>
+            </button>
+          ) : (
+            <span className="gallery-dialog-spacer" aria-hidden="true" />
+          )}
         </div>
       ) : null}
     </dialog>
