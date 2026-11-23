@@ -10,6 +10,11 @@ export function assetSrc(path) {
   return "";
 }
 
+export function isVideoSrc(path) {
+  if (typeof path !== "string") return false;
+  return /\.(mp4|webm|mov|m4v)$/i.test(path.split("?")[0]);
+}
+
 export function mailtoHref(email) {
   if (typeof email !== "string" || !EMAIL.test(email)) return undefined;
   return `mailto:${email}`;

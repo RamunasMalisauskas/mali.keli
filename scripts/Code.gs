@@ -3,13 +3,13 @@
  * then Deploy > Web app (Execute as: Me, Who has access: Anyone).
  *
  * Sheets:
- *   Works        — id, index, title, association, year, description, technique, location, category
+ *   Works        — id, index, title, association, year, description, technique, location, category, hide
  *   ExtraImages  — id, src, alt  (id must match the work)
  *
  * GET → {
  *   works: [{
  *     id, index, title, association, year, description,
- *     technique, location, category,
+ *     technique, location, category, hide,
  *     extraImages: [{ id, src, alt }]
  *   }]
  * }
@@ -31,6 +31,7 @@ const WORK_HEADERS = [
   "technique",
   "location",
   "category",
+  "hide",
 ];
 const IMAGE_HEADERS = ["id", "src", "alt"];
 
@@ -95,18 +96,23 @@ function rowsToObjects(tab, headers) {
 }
 
 function readWorks() {
-  const images = rowsToObjects(sheet(IMAGES_SHEET, IMAGE_HEADERS), IMAGE_HEADERS);
-  return rowsToObjects(sheet(WORKS_SHEET, WORK_HEADERS), WORK_HEADERS).map((work) => ({
-    ...work,
-    year: String(work.year),
-    extraImages: images
-      .filter((image) => String(image.id) === String(work.id))
-      .map((image) => ({
-        id: String(image.id),
-        src: String(image.src),
-        alt: String(image.alt),
-      })),
-  }));
+  const images = rowsToObjects(
+    sheet(IMAGES_SHEET, IMAGE_HEADERS),
+    IMAGE_HEADERS,
+  );
+  return rowsToObjects(sheet(WORKS_SHEET, WORK_HEADERS), WORK_HEADERS).map(
+    (work) => ({
+      ...work,
+      year: String(work.year),
+      extraImages: images
+        .filter((image) => String(image.id) === String(work.id))
+        .map((image) => ({
+          id: String(image.id),
+          src: String(image.src),
+          alt: String(image.alt),
+        })),
+    }),
+  );
 }
 
 function writeWorks(works) {
@@ -124,17 +130,25 @@ function writeWorks(works) {
 
   const workLast = Math.max(worksTab.getMaxRows(), 2);
   if (worksTab.getLastRow() > 1) {
-    worksTab.getRange(2, 1, worksTab.getLastRow() - 1, WORK_HEADERS.length).clearContent();
+    worksTab
+      .getRange(2, 1, worksTab.getLastRow() - 1, WORK_HEADERS.length)
+      .clearContent();
   }
   if (workRows.length) {
-    worksTab.getRange(2, 1, workRows.length, WORK_HEADERS.length).setValues(workRows);
+    worksTab
+      .getRange(2, 1, workRows.length, WORK_HEADERS.length)
+      .setValues(workRows);
   }
 
   if (imagesTab.getLastRow() > 1) {
-    imagesTab.getRange(2, 1, imagesTab.getLastRow() - 1, IMAGE_HEADERS.length).clearContent();
+    imagesTab
+      .getRange(2, 1, imagesTab.getLastRow() - 1, IMAGE_HEADERS.length)
+      .clearContent();
   }
   if (imageRows.length) {
-    imagesTab.getRange(2, 1, imageRows.length, IMAGE_HEADERS.length).setValues(imageRows);
+    imagesTab
+      .getRange(2, 1, imageRows.length, IMAGE_HEADERS.length)
+      .setValues(imageRows);
   }
 }
 

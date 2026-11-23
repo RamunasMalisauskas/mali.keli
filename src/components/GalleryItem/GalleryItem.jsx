@@ -1,37 +1,42 @@
 import { useEffect, useState } from "react";
 import { assetSrc, prefersReducedMotion, slugId } from "../../lib/safe.js";
 import GalleryDialog from "../GalleryDialog/GalleryDialog.jsx";
+import WorkMedia from "../WorkMedia/WorkMedia.jsx";
 import "./GalleryItem.css";
 
-const OPEN_SCROLL_PX = 40;
-const EMPTY_SLOTS = 3;
+const FACTS = [
+  ["Technique", "technique"],
+  ["Location", "location"],
+  ["Year", "year"],
+];
 
 export default function GalleryItem({ work }) {
   const [open, setOpen] = useState(false);
   const [zoom, setZoom] = useState(-1);
   const extraId = `work-extra-${slugId(work.id)}`;
-  const cover = assetSrc(work.image);
-  const extras = (work.extraImages ?? [])
-    .map((item) => ({ src: assetSrc(item.src), alt: item.alt }))
-    .filter((item) => item.src);
-  const slides = [...(cover ? [{ src: cover, alt: work.alt }] : []), ...extras];
-  const facts = [
-    ["Technique", work.technique],
-    ["Location", work.location],
-    ["Year", work.year],
-  ];
+  const hidden = Boolean(work.hide);
+  const cover = hidden ? "" : assetSrc(work.image);
+  const extras = hidden
+    ? []
+    : (work.extraImages ?? [])
+        .map((item) => ({ src: assetSrc(item.src), alt: item.alt }))
+        .filter((item) => item.src);
+  const slides = [cover && { src: cover, alt: work.alt }, ...extras].filter(
+    Boolean,
+  );
 
   useEffect(() => {
-    if (!open) return undefined;
+    if (!open) return;
     window.scrollBy({
-      top: OPEN_SCROLL_PX,
+      top: 40,
       behavior: prefersReducedMotion() ? "auto" : "smooth",
     });
-    return undefined;
   }, [open]);
 
   return (
-    <article className={`work${open ? " is-open" : ""}`}>
+    <article
+      className={`work${open ? " is-open" : ""}${hidden ? " is-hidden" : ""}`}
+    >
       <button
         className="work-media"
         type="button"
@@ -40,13 +45,7 @@ export default function GalleryItem({ work }) {
         onClick={() => setOpen((value) => !value)}
       >
         {cover ? (
-          <img
-            src={cover}
-            alt={work.alt}
-            width="800"
-            height="800"
-            loading="lazy"
-          />
+          <img src={cover} alt={work.alt} width="800" height="800" loading="lazy" />
         ) : (
           "images incoming..."
         )}
@@ -69,48 +68,45 @@ export default function GalleryItem({ work }) {
           <p className="work-date">{work.year}</p>
         </div>
       </div>
-      <div
-        className="work-extra"
-        id={extraId}
-        aria-hidden={!open}
-        inert={!open}
-      >
+      <div className="work-extra" id={extraId} aria-hidden={!open} inert={!open}>
         <div className="work-extra-inner">
           <dl className="work-meta">
-            {facts.map(([label, value]) => (
-              <div key={label}>
+            {FACTS.map(([label, key]) => (
+              <div key={key}>
                 <dt>{label}</dt>
-                <dd>{value}</dd>
+                <dd>{work[key]}</dd>
               </div>
             ))}
           </dl>
           {work.description ? (
             <p className="work-description">{work.description}</p>
           ) : null}
-          <div className="work-gallery">
-            {extras.length
-              ? extras.map((item, index) => (
-                  <button
-                    key={`${item.src}-${index}`}
-                    className="work-gallery-item"
-                    type="button"
-                    aria-label={`Zoom in ${item.alt || `${work.title} image ${index + 1}`}`}
-                    onClick={() => setZoom(cover ? index + 1 : index)}
-                  >
-                    <img src={item.src} alt="" loading="lazy" />
-                    <span className="work-pill" aria-hidden="true">
-                      Zoom in
-                    </span>
-                  </button>
-                ))
-              : Array.from({ length: EMPTY_SLOTS }, (_, index) => (
-                  <span
-                    key={`slot-${index}`}
-                    className="work-gallery-slot"
-                    aria-hidden="true"
-                  />
-                ))}
-          </div>
+          {hidden ? null : (
+            <div className="work-gallery">
+              {extras.length
+                ? extras.map((item, index) => (
+                    <button
+                      key={`${item.src}-${index}`}
+                      className="work-gallery-item"
+                      type="button"
+                      aria-label={`Zoom in ${item.alt || work.title}`}
+                      onClick={() => setZoom(cover ? index + 1 : index)}
+                    >
+                      <WorkMedia src={item.src} />
+                      <span className="work-pill" aria-hidden="true">
+                        Zoom in
+                      </span>
+                    </button>
+                  ))
+                : [0, 1, 2].map((slot) => (
+                    <span
+                      key={slot}
+                      className="work-gallery-slot"
+                      aria-hidden="true"
+                    />
+                  ))}
+            </div>
+          )}
         </div>
       </div>
       {zoom >= 0 ? (

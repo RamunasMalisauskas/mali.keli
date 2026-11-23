@@ -19,6 +19,10 @@
   corner-shape: squircle;
 }
 
+.work.is-hidden .work-media {
+  aspect-ratio: 4 / 1;
+}
+
 .work-media:focus-visible {
   outline: 1px solid var(--ink);
   outline-offset: 6px;
@@ -85,20 +89,6 @@
   padding-right: 0.4rem;
   width: 300%;
   min-width: 0;
-}
-
-.work-text p {
-  margin: 0;
-  max-width: 38ch;
-  color: var(--muted);
-  font-size: clamp(0.92rem, 1.3vw, 1.05rem);
-}
-
-.index {
-  font-size: 0.68rem;
-  letter-spacing: 0.32em;
-  text-transform: uppercase;
-  color: var(--muted);
 }
 
 .work h2 {
@@ -216,15 +206,14 @@
   cursor: pointer;
 }
 
-.work-gallery-item img {
+.work-gallery-item :is(img, video) {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: transform 1.45s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.work-gallery-item:hover img,
-.work-gallery-item:focus-visible img {
+.work-gallery-item:is(:hover, :focus-visible) :is(img, video) {
   transform: scale(1.08);
 }
 
@@ -280,16 +269,14 @@
 
 @media (prefers-reduced-motion: reduce) {
   .work-media img,
-  .work-gallery-item img,
+  .work-gallery-item :is(img, video),
   .work-pill,
   .work-extra {
     transition: none;
   }
 
-  .work-media:hover img,
-  .work-media:focus-visible img,
-  .work-gallery-item:hover img,
-  .work-gallery-item:focus-visible img {
+  .work-media:is(:hover, :focus-visible) img,
+  .work-gallery-item:is(:hover, :focus-visible) :is(img, video) {
     transform: none;
   }
 }

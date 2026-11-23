@@ -1,48 +1,41 @@
 import { workFolderImages } from "../data/workImages.js";
+import { workFolderVideos } from "../data/workVideos.js";
 
 export const SHEET_URL =
   "https://script.google.com/macros/s/AKfycbzgxaBsRQMg4yYRAPc7gdwRjCgFYY8hYgumPVVxvoiKqNK8UrLmbrl8Dd3yJhOr0o0/exec";
 
-/**
- * GET returns:
- * {
- *   works: [{
- *     id: string,
- *     index: string,
- *     title: string,
- *     association: string,
- *     year: string | number,
- *     description: string,
- *     technique: string,
- *     location: string,
- *     category: string,
- *     extraImages: [{ id: string, src: string, alt: string }]
- *   }]
- * }
- *
- * Cover `image` / `alt` are optional. Placeholder extras (clo_/acc_) are dropped.
- */
+const FIELDS = [
+  "index",
+  "title",
+  "association",
+  "year",
+  "description",
+  "technique",
+  "location",
+  "category",
+];
+
+const FOLDER_ALIASES = {
+  nemunoveidas: "thefaceofthenemunas",
+};
 
 function asText(value) {
   return value == null ? "" : String(value);
 }
 
-function slugFrom(title, index) {
-  const fromTitle = asText(title)
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-|-$/g, "");
-  if (fromTitle) return fromTitle;
+function asFlag(value) {
+  return value === true || /^(x|true|yes|1|hide)$/i.test(asText(value).trim());
+}
+
+function slugFrom(...parts) {
   return (
-    asText(index)
+    parts
+      .map(asText)
+      .join(" ")
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, "-")
       .replace(/^-|-$/g, "") || "work"
   );
-}
-
-function isPlaceholderSrc(src) {
-  return /\/images\/(clo_|acc_|work-|hero)/.test(src);
 }
 
 function foldKey(value) {
@@ -53,38 +46,41 @@ function foldKey(value) {
     .replace(/[^a-z0-9]+/g, "");
 }
 
-const FOLDER_ALIASES = {
-  nemunoveidas: "thefaceofthenemunas",
-};
-
-function encodeAsset(path) {
-  return encodeURI(path);
+function isPlaceholderSrc(src) {
+  return /\/images\/(clo_|acc_|work-|hero)/.test(src);
 }
 
-function folderImagesFor(work) {
+function mediaFor(work, library) {
   const keys = [foldKey(work.title), foldKey(work.id)].filter(Boolean);
-  for (const [folder, files] of Object.entries(workFolderImages)) {
-    const folderKey = foldKey(folder);
-    if (keys.includes(folderKey) || keys.includes(FOLDER_ALIASES[folderKey] ?? "")) {
-      return files.map(encodeAsset);
+  for (const [name, files] of Object.entries(library)) {
+    const key = foldKey(name);
+    if (keys.includes(key) || keys.includes(FOLDER_ALIASES[key] ?? "")) {
+      return files.map(encodeURI);
     }
   }
   return [];
 }
 
-function withFolderImages(work) {
-  const files = folderImagesFor(work);
-  if (!files.length) return work;
-  const [cover, ...rest] = files;
+function toExtra(work, src, alt) {
+  return { id: work.id, src, alt };
+}
+
+function withFolderMedia(work) {
+  if (work.hide) return work;
+  const photos = mediaFor(work, workFolderImages);
+  const videos = mediaFor(work, workFolderVideos);
+  if (!photos.length && !videos.length) return work;
+  const [cover, ...rest] = photos;
   return {
     ...work,
-    image: cover,
+    image: cover || work.image,
     alt: work.alt || work.title,
-    extraImages: rest.map((src, index) => ({
-      id: work.id,
-      src,
-      alt: `${work.title} ${index + 2}`,
-    })),
+    extraImages: [
+      ...videos.map((src, i) =>
+        toExtra(work, src, `${work.title} video ${i + 1}`),
+      ),
+      ...rest.map((src, i) => toExtra(work, src, `${work.title} ${i + 2}`)),
+    ],
   };
 }
 
@@ -102,20 +98,13 @@ export function normalizeWork(raw) {
     rawImage && !isPlaceholderSrc(rawImage)
       ? rawImage
       : extraImages[0]?.src || "";
-  const alt = asText(raw?.alt) || extraImages[0]?.alt || asText(raw?.title);
 
   return {
     id,
-    index: asText(raw?.index),
-    title: asText(raw?.title),
-    association: asText(raw?.association),
-    year: asText(raw?.year),
-    description: asText(raw?.description),
+    ...Object.fromEntries(FIELDS.map((key) => [key, asText(raw?.[key])])),
     image,
-    alt,
-    technique: asText(raw?.technique),
-    location: asText(raw?.location),
-    category: asText(raw?.category),
+    alt: asText(raw?.alt) || extraImages[0]?.alt || asText(raw?.title),
+    hide: asFlag(raw?.hide),
     extraImages,
   };
 }
@@ -130,13 +119,12 @@ async function readJson(response) {
 
 export function yearKey(year) {
   const years = String(year ?? "").match(/\d{4}/g);
-  if (!years) return Number.NEGATIVE_INFINITY;
-  return Math.max(...years.map(Number));
+  return years ? Math.max(...years.map(Number)) : Number.NEGATIVE_INFINITY;
 }
 
 export function orderWorks(works) {
   return [...works]
-    .map(withFolderImages)
+    .map(withFolderMedia)
     .sort(
       (a, b) =>
         yearKey(b.year) - yearKey(a.year) ||
@@ -148,12 +136,6 @@ export function orderWorks(works) {
     }));
 }
 
-export async function fetchWorks() {
-  const response = await fetch(SHEET_URL, { method: "GET" });
-  const body = await readJson(response);
-  return orderWorks((body.works ?? []).map(normalizeWork));
-}
-
 async function postSheet(payload) {
   const response = await fetch(SHEET_URL, {
     method: "POST",
@@ -161,6 +143,12 @@ async function postSheet(payload) {
     body: JSON.stringify(payload),
   });
   return readJson(response);
+}
+
+export async function fetchWorks() {
+  const response = await fetch(SHEET_URL, { method: "GET" });
+  const body = await readJson(response);
+  return orderWorks((body.works ?? []).map(normalizeWork));
 }
 
 export async function saveWorksToSheet(works) {
@@ -172,17 +160,11 @@ export async function saveWorksToSheet(works) {
 }
 
 export async function upsertWorkOnSheet(work) {
-  const body = await postSheet({
-    action: "upsert",
-    work: normalizeWork(work),
-  });
+  const body = await postSheet({ action: "upsert", work: normalizeWork(work) });
   return (body.works ?? []).map(normalizeWork);
 }
 
 export async function deleteWorkOnSheet(id) {
-  const body = await postSheet({
-    action: "delete",
-    id,
-  });
+  const body = await postSheet({ action: "delete", id });
   return (body.works ?? []).map(normalizeWork);
 }

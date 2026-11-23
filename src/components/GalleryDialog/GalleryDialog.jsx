@@ -1,35 +1,32 @@
 import { useEffect, useRef, useState } from "react";
+import WorkMedia from "../WorkMedia/WorkMedia.jsx";
 import "./GalleryDialog.css";
 
 export default function GalleryDialog({ slides, title, startIndex, onClose }) {
   const dialogRef = useRef(null);
   const [index, setIndex] = useState(startIndex);
   const current = slides[index];
+  const many = slides.length > 1;
 
   useEffect(() => {
     setIndex(startIndex);
   }, [startIndex]);
 
   useEffect(() => {
-    const dialog = dialogRef.current;
-    if (!dialog) return undefined;
-    if (!dialog.open) dialog.showModal();
-    return undefined;
+    dialogRef.current?.showModal();
   }, []);
 
   useEffect(() => {
     const onKey = (event) => {
-      if (event.key === "ArrowRight") step(1);
-      if (event.key === "ArrowLeft") step(-1);
+      if (!many) return;
+      if (event.key === "ArrowRight") setIndex((value) => (value + 1) % slides.length);
+      if (event.key === "ArrowLeft") {
+        setIndex((value) => (value - 1 + slides.length) % slides.length);
+      }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [slides.length]);
-
-  function step(delta) {
-    if (slides.length < 2) return;
-    setIndex((value) => (value + delta + slides.length) % slides.length);
-  }
+  }, [many, slides.length]);
 
   return (
     <dialog
@@ -50,23 +47,25 @@ export default function GalleryDialog({ slides, title, startIndex, onClose }) {
           >
             Close
           </button>
-          {slides.length > 1 ? (
+          {many ? (
             <button
               type="button"
               className="work-pill gallery-dialog-prev"
-              onClick={() => step(-1)}
+              onClick={() =>
+                setIndex((value) => (value - 1 + slides.length) % slides.length)
+              }
             >
               ←<span className="sr-only">Previous image</span>
             </button>
           ) : (
             <span className="gallery-dialog-spacer" aria-hidden="true" />
           )}
-          <img src={current.src} alt={current.alt} />
-          {slides.length > 1 ? (
+          <WorkMedia src={current.src} alt={current.alt} zoomed />
+          {many ? (
             <button
               type="button"
               className="work-pill gallery-dialog-next"
-              onClick={() => step(1)}
+              onClick={() => setIndex((value) => (value + 1) % slides.length)}
             >
               →<span className="sr-only">Next image</span>
             </button>
