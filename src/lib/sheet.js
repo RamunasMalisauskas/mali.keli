@@ -127,6 +127,7 @@ export function orderWorks(works) {
     .map(withFolderMedia)
     .sort(
       (a, b) =>
+        Number(a.hide) - Number(b.hide) ||
         yearKey(b.year) - yearKey(a.year) ||
         a.title.localeCompare(b.title, "lt"),
     )
