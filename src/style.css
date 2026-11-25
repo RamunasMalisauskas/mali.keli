@@ -1,7 +1,7 @@
 :root {
   --bg: #f5fafe;
   --ink: #1848a0;
-  --muted: hsl(219, 62%, 28%);
+  --muted: #1b3a73;
   --dark: #081f3e;
   --media-radius: clamp(1.15rem, 2.2vw, 2rem);
   --spine-inset: 2.55rem;
