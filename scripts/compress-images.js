@@ -17,7 +17,10 @@ async function walk(dir) {
   const files = [];
   for (const entry of entries) {
     const path = join(dir, entry.name);
-    if (entry.isDirectory()) files.push(...(await walk(path)));
+    if (entry.isDirectory()) {
+      if (entry.name === "favicon") continue;
+      files.push(...(await walk(path)));
+    }
     else files.push(path);
   }
   return files;
