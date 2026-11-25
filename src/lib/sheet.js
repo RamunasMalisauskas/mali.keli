@@ -17,7 +17,7 @@ const FIELDS = [
 
 const FOLDER_ALIASES = {
   nemunoveidas: "thefaceofthenemunas",
-  motinystesistrauktinis:
+  istrauktinis:
     "drawnthreadworkorwhatremainsbetweenthreadstextileandmaternalexperiences",
 };
 

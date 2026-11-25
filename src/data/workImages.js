@@ -68,7 +68,7 @@ export const workFolderImages = {
     "/images/Mental Candy/MKlookbook-101.jpg",
     "/images/Mental Candy/MKlookbook-110.jpg",
   ],
-  Isstrauktinis: [
+  Istrauktinis: [
     "/images/Istrauktinis/IMG_8885.jpg",
     "/images/Istrauktinis/IMG_8886.jpg",
     "/images/Istrauktinis/IMG_8887.jpg",
