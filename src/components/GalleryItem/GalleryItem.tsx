@@ -116,30 +116,22 @@ export default function GalleryItem({ work }: GalleryItemProps) {
           {work.description ? (
             <p className="work-description">{work.description}</p>
           ) : null}
-          {hidden ? null : (
+          {hidden || extras.length === 0 ? null : (
             <div className="work-gallery">
-              {extras.length
-                ? extras.map((item, index) => (
-                    <button
-                      key={`${item.src}-${index}`}
-                      className="work-gallery-item"
-                      type="button"
-                      aria-label={`Zoom in ${item.alt || work.title}`}
-                      onClick={() => setZoom(cover ? index + 1 : index)}
-                    >
-                      <WorkMedia src={item.src} />
-                      <span className="work-pill" aria-hidden="true">
-                        Zoom in
-                      </span>
-                    </button>
-                  ))
-                : [0, 1, 2].map((slot) => (
-                    <span
-                      key={slot}
-                      className="work-gallery-slot"
-                      aria-hidden="true"
-                    />
-                  ))}
+              {extras.map((item, index) => (
+                <button
+                  key={`${item.src}-${index}`}
+                  className="work-gallery-item"
+                  type="button"
+                  aria-label={`Zoom in ${item.alt || work.title}`}
+                  onClick={() => setZoom(cover ? index + 1 : index)}
+                >
+                  <WorkMedia src={item.src} />
+                  <span className="work-pill" aria-hidden="true">
+                    Zoom in
+                  </span>
+                </button>
+              ))}
             </div>
           )}
         </div>
