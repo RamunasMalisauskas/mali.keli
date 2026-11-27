@@ -19,6 +19,7 @@ const FOLDER_ALIASES = {
   nemunoveidas: "thefaceofthenemunas",
   istrauktinis:
     "drawnthreadworkorwhatremainsbetweenthreadstextileandmaternalexperiences",
+  creativemissions: "creativemissionsforeachother",
 };
 
 function asText(value) {
