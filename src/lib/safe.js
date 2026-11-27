@@ -34,3 +34,12 @@ export function slugId(value) {
   if (typeof value !== "string") return "";
   return value.replace(/[^a-z0-9-]/gi, "");
 }
+
+export function workAnchor(url, fallback = "") {
+  const trimmed = typeof url === "string" ? url.trim() : "";
+  const fromHash = trimmed.includes("#")
+    ? trimmed.slice(trimmed.indexOf("#") + 1)
+    : trimmed;
+  const last = fromHash.split("/").filter(Boolean).pop() ?? "";
+  return slugId(last) || slugId(fallback);
+}

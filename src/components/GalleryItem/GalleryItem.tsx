@@ -1,30 +1,47 @@
 import { useEffect, useState } from "react";
-import { assetSrc, prefersReducedMotion, slugId } from "../../lib/safe.js";
+import {
+  assetSrc,
+  prefersReducedMotion,
+  slugId,
+  workAnchor,
+} from "../../lib/safe.js";
+import type { Work } from "../../types/work";
 import GalleryDialog from "../GalleryDialog/GalleryDialog.jsx";
 import PretextLetters from "../PretextLetters/PretextLetters.jsx";
 import WorkMedia from "../WorkMedia/WorkMedia.jsx";
 import "./GalleryItem.css";
 
+type GalleryItemProps = {
+  work: Work;
+};
+
+type Slide = {
+  src: string;
+  alt: string;
+};
+
 const FACTS = [
   ["Technique", "technique"],
   ["Location", "location"],
   ["Year", "year"],
-];
+] as const;
 
-export default function GalleryItem({ work }) {
+export default function GalleryItem({ work }: GalleryItemProps) {
   const [open, setOpen] = useState(false);
   const [zoom, setZoom] = useState(-1);
   const extraId = `work-extra-${slugId(work.id)}`;
+  const anchor = workAnchor(work.url, work.id);
   const hidden = Boolean(work.hide);
   const cover = hidden ? "" : assetSrc(work.image);
-  const extras = hidden
+  const extras: Slide[] = hidden
     ? []
     : (work.extraImages ?? [])
         .map((item) => ({ src: assetSrc(item.src), alt: item.alt }))
         .filter((item) => item.src);
-  const slides = [cover && { src: cover, alt: work.alt }, ...extras].filter(
-    Boolean,
-  );
+  const slides: Slide[] = [
+    cover ? { src: cover, alt: work.alt } : null,
+    ...extras,
+  ].filter((item): item is Slide => Boolean(item));
 
   useEffect(() => {
     if (!open) return;
@@ -34,8 +51,14 @@ export default function GalleryItem({ work }) {
     });
   }, [open]);
 
+  useEffect(() => {
+    if (!anchor || window.location.hash !== `#${anchor}`) return;
+    document.getElementById(anchor)?.scrollIntoView();
+  }, [anchor]);
+
   return (
     <article
+      id={anchor || undefined}
       className={`work${open ? " is-open" : ""}${hidden ? " is-hidden" : ""}`}
     >
       <button
@@ -46,7 +69,13 @@ export default function GalleryItem({ work }) {
         onClick={() => setOpen((value) => !value)}
       >
         {cover ? (
-          <img src={cover} alt={work.alt} width="800" height="800" loading="lazy" />
+          <img
+            src={cover}
+            alt={work.alt}
+            width="800"
+            height="800"
+            loading="lazy"
+          />
         ) : (
           "images incoming..."
         )}
@@ -69,7 +98,12 @@ export default function GalleryItem({ work }) {
           <p className="work-date">{work.year}</p>
         </div>
       </div>
-      <div className="work-extra" id={extraId} aria-hidden={!open} inert={!open}>
+      <div
+        className="work-extra"
+        id={extraId}
+        aria-hidden={!open}
+        inert={!open}
+      >
         <div className="work-extra-inner">
           <dl className="work-meta">
             {FACTS.map(([label, key]) => (

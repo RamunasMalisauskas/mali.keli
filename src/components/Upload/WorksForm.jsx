@@ -19,6 +19,7 @@ function emptyWork() {
     technique: "",
     location: "",
     category: "",
+    url: "",
     hide: false,
     extraImages: [],
   };

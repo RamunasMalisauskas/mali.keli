@@ -3,13 +3,13 @@
  * then Deploy > Web app (Execute as: Me, Who has access: Anyone).
  *
  * Sheets:
- *   Works        — id, index, title, association, year, description, technique, location, category, hide
+ *   Works        — id, index, title, association, year, description, technique, location, category, hide, url
  *   ExtraImages  — id, src, alt  (id must match the work)
  *
  * GET → {
  *   works: [{
  *     id, index, title, association, year, description,
- *     technique, location, category, hide,
+ *     technique, location, category, hide, url,
  *     extraImages: [{ id, src, alt }]
  *   }]
  * }
@@ -32,6 +32,7 @@ const WORK_HEADERS = [
   "location",
   "category",
   "hide",
+  "url",
 ];
 const IMAGE_HEADERS = ["id", "src", "alt"];
 

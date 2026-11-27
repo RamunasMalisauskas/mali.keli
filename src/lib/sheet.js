@@ -13,6 +13,7 @@ const FIELDS = [
   "technique",
   "location",
   "category",
+  "url",
 ];
 
 const FOLDER_ALIASES = {

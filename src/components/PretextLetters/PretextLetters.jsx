@@ -99,6 +99,16 @@ function alignLines(lines, maxWidth, align) {
   }));
 }
 
+/**
+ * @param {{
+ *   as?: string,
+ *   text?: string,
+ *   lines?: string[],
+ *   ariaLabel?: string,
+ *   uppercase?: boolean,
+ *   className?: string,
+ * }} props
+ */
 export default function PretextLetters({
   as: Tag = "h2",
   text = "",
