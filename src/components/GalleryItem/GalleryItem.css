@@ -173,7 +173,7 @@
 
 .work-description {
   margin: 0;
-  max-width: 112ch;
+  max-width: 72ch;
   color: var(--muted);
   font-size: clamp(0.92rem, 1.3vw, 1.05rem);
   line-height: 1.45;
@@ -244,10 +244,11 @@
   .work-media {
     width: calc(100% - 2rem);
     margin: 0 1rem;
+    border-radius: var(--media-radius);
   }
 
   .work-text {
-    width: auto;
+    width: calc(100% - 2rem);
     justify-self: start;
     justify-items: start;
     text-align: left;
