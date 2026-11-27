@@ -1,10 +1,16 @@
+import { useState } from "react";
 import { assetSrc } from "../../lib/safe.js";
 import DescriptionPulse from "../DescriptionPulse/DescriptionPulse.jsx";
 import HeroName from "../HeroName/HeroName.jsx";
 import WaveMark from "../WaveMark/WaveMark.jsx";
 import "./Landing.css";
 
-const SLOW_RATE = 0.65;
+const SLOW_RATE = 0.85;
+const HERO_VIDEOS = [
+  "/video/hero_chair.mp4",
+  "/video/hero_close.mp4",
+  "/video/hero_rain.mp4",
+];
 const setSlowPlay = (event) => {
   event.currentTarget.playbackRate = SLOW_RATE;
 };
@@ -43,13 +49,17 @@ export function workMatchesFilter(work, filter) {
 }
 
 export default function Landing({ activeFilter = "", onFilterChange }) {
+  const [heroSrc] = useState(
+    () => HERO_VIDEOS[Math.floor(Math.random() * HERO_VIDEOS.length)],
+  );
+
   return (
     <header className="hero">
       <div className="hero-top">
         <div className="hero-media">
           <video
             className="hero-video"
-            src={assetSrc("/video/hero_close.mp4")}
+            src={assetSrc(heroSrc)}
             autoPlay
             muted
             loop
