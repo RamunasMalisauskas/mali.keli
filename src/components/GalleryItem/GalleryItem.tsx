@@ -23,6 +23,7 @@ type Slide = {
 const FACTS = [
   ["Technique", "technique"],
   ["Location", "location"],
+  ["Association", "association"],
   ["Year", "year"],
 ] as const;
 
@@ -42,6 +43,7 @@ export default function GalleryItem({ work }: GalleryItemProps) {
     cover ? { src: cover, alt: work.alt } : null,
     ...extras,
   ].filter((item): item is Slide => Boolean(item));
+  const facts = FACTS.filter(([, key]) => work[key].trim());
 
   useEffect(() => {
     if (!open) return;
@@ -105,14 +107,16 @@ export default function GalleryItem({ work }: GalleryItemProps) {
         inert={!open}
       >
         <div className="work-extra-inner">
-          <dl className="work-meta">
-            {FACTS.map(([label, key]) => (
-              <div key={key}>
-                <dt>{label}</dt>
-                <dd>{work[key]}</dd>
-              </div>
-            ))}
-          </dl>
+          {facts.length ? (
+            <dl className="work-meta">
+              {facts.map(([label, key]) => (
+                <div key={key}>
+                  <dt>{label}</dt>
+                  <dd>{work[key]}</dd>
+                </div>
+              ))}
+            </dl>
+          ) : null}
           {work.description ? (
             <p className="work-description">{work.description}</p>
           ) : null}
