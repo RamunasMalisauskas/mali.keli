@@ -26,10 +26,9 @@ export const FILTERS = [
 
 const FILTER_TERMS = {
   installations: ["installation", "visual arts"],
-  workshops: ["workshop", "education", "co-creation"],
+  education: ["workshop", "education", "co-creation"],
   community: ["community", "education", "curatorial"],
-  accessories: ["accessor", "wearable"],
-  fashion: ["fashion", "costume", "wearable", "runway"],
+  fashion: ["fashion", "costume", "wearable", "runway", "accessor", "wearable"],
   fabrics: ["fabric", "textile", "zero-waste", "linen"],
 };
 
