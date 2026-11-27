@@ -19,7 +19,6 @@ export const FILTERS = [
   "installations",
   "workshops",
   "community",
-  "accessories",
   "fashion",
   "fabrics",
 ];
