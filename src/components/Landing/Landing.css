@@ -209,12 +209,8 @@
     grid-template-columns: 1fr;
   }
 
-  .hero-mark-about {
-    display: none;
-  }
-
-  .hero .hero-dot-start,
-  .hero-works-mark {
+  .hero-mark-about,
+  .hero .hero-dot-start {
     display: none;
   }
 
@@ -223,8 +219,10 @@
   }
 
   .hero-works-mark {
+    position: static;
+    transform: none;
     justify-self: start;
-    padding: 1rem;
+    padding: 4rem 1rem 0;
   }
 
   .hero-filters {
